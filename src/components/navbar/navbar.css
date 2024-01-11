@@ -105,41 +105,6 @@
   height: 30px;
 }
 
-.MCQListPage__body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.MCQListPage__body .MCQListPage__title {
-  font-size: 30px;
-  color: #2D81F7;
-}
-.MCQListPage__body .MCQ-lists {
-  width: 1200px;
-  height: auto;
-  flex-direction: column;
-}
-.MCQListPage__body .MCQ-lists .MCQ-list__Each-test {
-  background-image: radial-gradient(#2190F5, #0A489C);
-  padding: 15px;
-  margin: 30px;
-  width: 300px;
-  border-radius: 10px;
-  font-size: 20px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.5s;
-}
-.MCQListPage__body .MCQ-lists .MCQ-list__Each-test a {
-  text-decoration: none;
-  color: white;
-}
-.MCQListPage__body .MCQ-lists .MCQ-list__Each-test:hover {
-  box-shadow: white;
-  transform: scale(1.05);
-}
-
 .MCQ-sidebar .MCQ-userProfile-side:hover .MCQ-userProfile__options {
   display: block;
-}/*# sourceMappingURL=home.css.map */
+}/*# sourceMappingURL=navbar.css.map */

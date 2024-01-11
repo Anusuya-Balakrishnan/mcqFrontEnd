@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import home from "./home.css";
+import navbar from "./navbar.css";
 import dhoni from "./images/dhoni.jpg";
 import oaLogo from "./images/oceanacademy Logo.svg";
 import medal from "./images/medal.svg";

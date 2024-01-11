@@ -1,0 +1,38 @@
+@use "../variables" as *;
+.MCQListPage__body{
+    @include flexContent;
+    flex-direction: column;
+    .MCQListPage__title{
+        font-size: 30px;
+        color: $button-color;
+    }
+    .MCQ-lists{
+        
+        width: 1200px;
+        height: auto;
+        
+        flex-direction: column;
+        .MCQ-list__Each-test{
+            
+            background-image:$background-color;
+            padding: 15px;
+            margin: 30px;
+            width: 300px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.5s;
+            a{
+                text-decoration: none;
+                color: white;
+               
+            }
+            &:hover{
+                box-shadow: white;
+                transform: scale(1.05);
+            }
+            
+        }
+    }
+}
