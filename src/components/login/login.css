@@ -55,7 +55,8 @@
   align-items: center;
   justify-content: center;
 }
-.home-page .home-page__signin-box .sigin-box__button button {
+.home-page .home-page__signin-box .sigin-box__button .button {
+  text-decoration: none;
   padding: 10px 50px;
   font-size: larger;
   background-color: #2D81F7;

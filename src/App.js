@@ -1,6 +1,7 @@
 import "./App.css";
 import { Home } from "./components/home/Home";
-import { Login } from "./components/login/Login";
+import Login from "./components/login/Login.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/navbar/Navbar";
 import { Signup } from "./components/signup/Signup";
 import { TopList } from "./components/topicList/TopList";
@@ -11,15 +12,23 @@ import { ResultPage } from "./components/resultPage/ResultPage";
 function App() {
   return (
     <div className="App">
-      {/* <Login /> */}
+      <BrowserRouter>
+        <main>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+          </Routes>
+        </main>
+      </BrowserRouter>
+
       {/* <Home /> */}
       {/* <Signup /> */}
       {/* <TopList /> */}
-      <Navbar />
+      {/* <Navbar /> */}
       {/* <QuestionPage /> */}
       {/* <TopContent /> */}
       {/* <TestInstruction /> */}
-      <ResultPage />
+      {/* <ResultPage /> */}
     </div>
   );
 }

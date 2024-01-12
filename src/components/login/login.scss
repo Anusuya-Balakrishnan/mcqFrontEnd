@@ -47,7 +47,8 @@
     margin-top: 20px;
     // background-color: aquamarine;
     @include flexContent;
-    button{
+    .button{
+      text-decoration: none;
         padding: 10px 50px;
         font-size: larger;
         background-color: $button-color;
