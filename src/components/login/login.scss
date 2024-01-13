@@ -22,6 +22,7 @@
     border-radius: 10px;
     padding: 20px;
     margin:30px 0;
+   //  background-color: rebeccapurple;
     @include flexContent;
  flex-direction: column;
  .home-page__sigin-box-title{
@@ -29,17 +30,34 @@
     color: #535353;
     text-align: center;
  }
- input[type="telephone"]{
+
+ .home-page__sigin-box-middleBox{
+   display: flex;
+   justify-content: flex-start;
+   flex-direction: column;
+   text-align: left;
+   margin:  40px 0 30px;
+   width: 330px;
+}
+ input[type="email"]{
+   width: 330px;
+   height: 60px;
     border: 0;
     padding: 15px;
     border-radius: 2px;
-    margin:  40px 0 30px;
-    width: 330px;
-   
-     
+    margin: 0;
+
  }
- input[type="telephone"]:focus{
+ input[type="email"]:focus{
    outline: 1px $button-color solid ;
+}
+.signup_box a{
+   color:$button-color;
+   margin-left:5px;
+   &:hover{
+      cursor: pointer;
+      text-decoration:2px underline;
+   }
 }
  .sigin-box__button{
     width: 100%;
@@ -60,3 +78,4 @@
  }
  }
 }
+

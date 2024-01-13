@@ -6,10 +6,10 @@ export function Home() {
   return (
     <div className="Homepage">
       <Navbar />
-      <div class="MCQListPage__body">
-        <div class="MCQListPage__title">MCQ'S List</div>
-        <div class="MCQ-lists">
-          <div class="MCQ-list__Each-test">
+      <div className="MCQListPage__body">
+        <div className="MCQListPage__title">MCQ'S List</div>
+        <div className="MCQ-lists">
+          <div className="MCQ-list__Each-test">
             <a href=""> MCQ's</a>
           </div>
         </div>

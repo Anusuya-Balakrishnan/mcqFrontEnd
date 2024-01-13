@@ -4,34 +4,63 @@ import navbar from "./navbar.css";
 import dhoni from "./images/dhoni.jpg";
 import oaLogo from "./images/oceanacademy Logo.svg";
 import medal from "./images/medal.svg";
+
+import axios from "axios";
+
 export function Navbar() {
+  const logoutFunction = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/mcq/userLogout/`,
+        {},
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`, // Include the authorization token
+            // You can include other headers as needed
+          },
+        }
+      );
+      console.log("Logout response:", response?.data);
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      console.log("Deleted successfully:", response?.data?.Message);
+      // Refresh the window
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting resource:", error);
+      // Refresh the window
+      window.location.reload();
+    }
+  };
+
   return (
-    <section class="MCQListPage">
-      <div class="MCQ-Navbar">
-        <div class="MCQ-logo">
+    <section className="MCQListPage">
+      <div className="MCQ-Navbar">
+        <div className="MCQ-logo">
           <img src={oaLogo} alt="" />
         </div>
-        <div class="MCQ-sidebar">
-          <div class="MCQ-userProfile-side">
-            <div class="MCQ-userProfile">
-              <p> userName </p>
-              <div class="MCQ-userProfile__image">
+        <div className="MCQ-sidebar">
+          <div className="MCQ-userProfile-side">
+            <div className="MCQ-userProfile">
+              <p> {localStorage.getItem("username")} </p>
+              <div className="MCQ-userProfile__image">
                 <img src={dhoni} alt="userImage" />
               </div>
             </div>
-            <div class="MCQ-userProfile__options">
-              <div class="editOption">
-                <a href="{% url 'signup'%}"> Edit Profile </a>
+            <div className="MCQ-userProfile__options">
+              <div className="editOption">
+                <a href=""> Edit Profile </a>
               </div>
-              <div class="logoutOption">
-                <a href="{% url 'logout' %}">Logout</a>
+              <div className="logoutOption" onClick={logoutFunction}>
+                <a href="">Logout</a>
               </div>
 
-              <div class="logoutOption">
+              {/* <div class="logoutOption">
                 <a href="">Exit Test</a>
-              </div>
+              </div> */}
             </div>
-            <div class="MCQ-userProfile__leaderBoard">
+            <div className="MCQ-userProfile__leaderBoard">
               <a href="">Leader Board</a>
               <img src={medal} alt="medal" />
             </div>

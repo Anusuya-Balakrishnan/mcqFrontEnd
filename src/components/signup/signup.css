@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   font-family: "Poppins";
+  box-sizing: border-box;
 }
 
 #CreateAccount {
@@ -21,8 +22,6 @@
 }
 #CreateAccount .sign-up-block {
   background-color: #e9f0fa;
-  width: 600px;
-  height: 600px;
   margin: 20px;
   border-radius: 10px;
   padding: 20px;
@@ -85,7 +84,7 @@
   font-size: 18px;
 }
 
-.signup-Input {
+input {
   margin: 15px 10px;
   width: 240px;
   height: 30px;
@@ -97,6 +96,19 @@
   font-family: "Poppins";
 }
 
-.signup-Input:focus {
+input:focus {
+  background-color: white;
   outline: 1px solid #2D81F7;
+}
+
+@media (max-width: 1000px) {
+  #CreateAccount {
+    height: auto;
+  }
+  .sign-up-block-form {
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+  }
 }/*# sourceMappingURL=signup.css.map */
