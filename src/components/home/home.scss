@@ -7,11 +7,15 @@
         color: $button-color;
     }
     .MCQ-lists{
-        
+        // width: auto;
         width: 1200px;
+        // background-color: aqua;
         height: auto;
-        
+        display: flex;
+        // justify-content: center;
+        padding-top: 20px;
         flex-direction: column;
+        flex-wrap: wrap;
         .MCQ-list__Each-test{
             
             background-image:$background-color;

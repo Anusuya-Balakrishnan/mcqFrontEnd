@@ -19,7 +19,10 @@
 .MCQListPage__body .MCQ-lists {
   width: 1200px;
   height: auto;
+  display: flex;
+  padding-top: 20px;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 .MCQListPage__body .MCQ-lists .MCQ-list__Each-test {
   background-image: radial-gradient(#2190F5, #0A489C);
