@@ -17,7 +17,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/topList" element={<TopList />} />
+            <Route path="/topList/:id" element={<TopList />} />
+            <Route path="/content/:id" element={<TopContent />} />
           </Routes>
         </main>
       </BrowserRouter>

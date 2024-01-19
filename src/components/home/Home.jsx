@@ -36,7 +36,7 @@ export function Home() {
     // console.log("data", data);
     const array = [];
     for (let eachData of data) {
-      array.push(eachData.mcqName);
+      array.push(eachData);
     }
     // console.log(array);
     setMcqList(array);
@@ -45,8 +45,8 @@ export function Home() {
     console.log(mcqList);
   }, [mcqList]);
 
-  const userNavigate = () => {
-    navigate("/topList");
+  const userNavigate = (id) => {
+    navigate(`/topList/${id}`);
   };
   return (
     <>
@@ -58,8 +58,13 @@ export function Home() {
             <div className="MCQ-lists">
               {mcqList.map((item, index) => (
                 <div className="MCQ-list__Each-test">
-                  <a key={index} onClick={userNavigate}>
-                    {item} MCQ's
+                  <a
+                    key={index}
+                    onClick={() => {
+                      userNavigate(item.id);
+                    }}
+                  >
+                    {item.mcqName} MCQ's
                   </a>
                 </div>
               ))}

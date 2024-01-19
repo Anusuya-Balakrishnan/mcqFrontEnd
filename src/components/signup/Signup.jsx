@@ -33,7 +33,7 @@ export function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post("http://127.0.0.1:8000/mcq/users/", {
-        name: userName,
+        studentName: userName,
         date: date,
         dob: dob,
         mobileNumber: mobileNumber,
@@ -62,7 +62,7 @@ export function Signup() {
       setNationality("");
 
       localStorage.setItem("token", response?.data?.token);
-      localStorage.setItem("username", response?.data?.user?.name);
+      localStorage.setItem("username", response?.data?.user?.studentName);
     } catch (error) {
       console.log("error", error);
     }
@@ -90,17 +90,17 @@ export function Signup() {
                   />
                   <br />
                   <input
+                    type="datetime-local"
                     className="signup-Input"
-                    type="date"
                     // onfocus="(this.type='datetime-local')"
                     // onblur="(this.type='text')"
-                    placeholder="Date"
+                    // placeholder="Date"
                     name="date"
                     onChange={(e) => {
                       setDate(e.target.value);
                     }}
                     // value={date}
-                    value="date of birth"
+                    value={date}
                     required
                   />
                   <br />
@@ -116,7 +116,7 @@ export function Signup() {
                   />
                   <br />
                   <input
-                    type="date"
+                    type="datetime-local"
                     className="signup-Input"
                     placeholder="Date Of Birth"
                     name="dob"
