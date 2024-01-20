@@ -5,6 +5,7 @@ import Login from "../login/Login";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 export function TopContent() {
+  const navigate = useNavigate();
   // getting value from useParams
   let { id } = useParams();
   console.log("id", id);
@@ -43,6 +44,9 @@ export function TopContent() {
     setTopics(array);
   }, [data]);
 
+  const userNaivagate = (languageId, topicId, topicName) => {
+    navigate(`/testInstruction/${languageId}/${topicId}/${topicName}`);
+  };
   return (
     <>
       {localStorage.getItem("token") ? (
@@ -56,7 +60,13 @@ export function TopContent() {
             </div>
             <div className="test-content-lists">
               {topics.map((item, index) => (
-                <a className="test-content__listElement" href="" key={index}>
+                <a
+                  className="test-content__listElement"
+                  key={index}
+                  onClick={() => {
+                    userNaivagate(item.id, item.languageId, item.topicName);
+                  }}
+                >
                   {item.topicName}
                 </a>
               ))}
