@@ -38,12 +38,12 @@ export function TopList() {
   }, []);
 
   useEffect(() => {
-    // console.log("data", data);
+    console.log("data", data);
     const array = [];
     for (let eachData of data) {
       array.push(eachData);
     }
-    // console.log(array);
+    console.log(array);
     setlanguageList(array);
   }, [data]);
 
@@ -59,7 +59,7 @@ export function TopList() {
           <div class="MCQTest__Box-parent">
             {languageList.map((item, index) => (
               <div className="MCQ-list__Each-test">
-                <a
+                <div
                   key={index}
                   onClick={() => {
                     contentNavigate(item.id);
@@ -81,7 +81,7 @@ export function TopList() {
                       </p>
                     </div>
                   </div>
-                </a>
+                </div>
               </div>
             ))}
           </div>

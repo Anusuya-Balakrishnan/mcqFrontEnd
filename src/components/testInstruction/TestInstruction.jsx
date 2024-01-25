@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import testInstruction from "./testInstruction.css";
 import testInstructionImage from "./image/testInstruction.svg";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Login from "../login/Login";
 import { Navbar } from "../navbar/Navbar.jsx";
 import axios from "axios";
-import MyContext from "../../MyContext.jsx";
+import Context from "../Context.jsx";
 export function TestInstruction() {
-  const { setQuestions } = useContext(MyContext);
+  // getting value from useParams
   let { languageId, topicId, topicName } = useParams();
-  // console.log(setQuestions);
 
   const [topicIdData, settopicId] = useState("");
   const [languageIdData, setLanguageIdData] = useState("");
@@ -18,6 +17,9 @@ export function TestInstruction() {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [totalMark, setTotalMark] = useState(0);
+  const { questions, setQuestions } = useContext(Context);
+  const [questionsOnly, setQuestionsOnly] = useState({});
+  const [level, setLevel] = useState("");
 
   var time = 0;
   var mark = 0;
@@ -38,12 +40,9 @@ export function TestInstruction() {
             },
           }
         );
-        // setQuestions(response?.data?.questions);
-
-        setResponseData(response?.data?.questions);
-
-        // setQuestions(responseData);
-        // console.log("questions", questions);
+        setResponseData(response?.data?.data["questions"]);
+        setQuestionsOnly(response?.data?.data["questions_values"]);
+        setLevel(() => response?.data?.data["questions"][0]["level"]);
       } catch (error) {
         console.log("Error:", error);
       }
@@ -62,12 +61,19 @@ export function TestInstruction() {
     }
     setTotalTime(time);
     setTotalMark(mark);
-  });
+  }, [responseData]);
 
-  const handleClick = () => {
-    console.log(responseData);
-    setQuestions("Hello");
-  };
+  useEffect(() => {
+    setQuestions({
+      key: questionsOnly,
+      topicId: topicId,
+      languageId: languageId,
+      level: level,
+    });
+  }, [time]);
+  useEffect(() => {
+    console.log(questions);
+  }, [time]);
   return (
     <>
       {localStorage.getItem("token") ? (
@@ -85,10 +91,10 @@ export function TestInstruction() {
                     <li>Time Allocated: {totalTime} minutes</li>
                   </ul>
                   <button>
-                    <a href="/test" onClick={handleClick}>
-                      Start Test
-                    </a>
+                    <Link to={`/testPage/${topicNameData}`}>Start Test</Link>
                   </button>
+
+                  {/* <p>{dummy.question}</p> */}
                 </div>
               </div>
               <div className="instruction-page_image">

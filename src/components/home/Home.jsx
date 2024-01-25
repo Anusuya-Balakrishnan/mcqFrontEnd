@@ -58,14 +58,14 @@ export function Home() {
             <div className="MCQ-lists">
               {mcqList.map((item, index) => (
                 <div className="MCQ-list__Each-test">
-                  <a
+                  <div
                     key={index}
                     onClick={() => {
                       userNavigate(item.id);
                     }}
                   >
                     {item.mcqName} MCQ's
-                  </a>
+                  </div>
                 </div>
               ))}
             </div>

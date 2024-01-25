@@ -4,8 +4,13 @@ import { Navbar } from "../navbar/Navbar";
 import Login from "../login/Login";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+// import { useMyContext } from "../MyContext";
 export function TopContent() {
   const navigate = useNavigate();
+
+  // const { questions, handleQuestion } = useMyContext();
+  // console.log(questions, "TopContent");
+
   // getting value from useParams
   let { id } = useParams();
   console.log("id", id);
@@ -34,13 +39,13 @@ export function TopContent() {
   }, []);
 
   useEffect(() => {
-    // console.log("data", data);
+    console.log("data", data);
     const array = [];
     for (let eachData of data) {
-      console.log("eachData", eachData);
+      // console.log("eachData", eachData);
       array.push(eachData);
     }
-    console.log("topics", topics);
+    // console.log("topics", topics);
     setTopics(array);
   }, [data]);
 
@@ -60,7 +65,7 @@ export function TopContent() {
             </div>
             <div className="test-content-lists">
               {topics.map((item, index) => (
-                <a
+                <div
                   className="test-content__listElement"
                   key={index}
                   onClick={() => {
@@ -68,7 +73,7 @@ export function TopContent() {
                   }}
                 >
                   {item.topicName}
-                </a>
+                </div>
               ))}
             </div>
           </div>

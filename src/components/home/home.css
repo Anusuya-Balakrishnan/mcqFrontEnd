@@ -35,7 +35,7 @@
   cursor: pointer;
   transition: 0.5s;
 }
-.MCQListPage__body .MCQ-lists .MCQ-list__Each-test a {
+.MCQListPage__body .MCQ-lists .MCQ-list__Each-test div {
   text-decoration: none;
   color: white;
 }

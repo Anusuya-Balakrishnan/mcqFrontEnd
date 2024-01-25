@@ -17,11 +17,11 @@
   display: flex;
   flex-wrap: wrap;
 }
-.MCQTest__Box-parent a {
+.MCQTest__Box-parent .MCQ-list__Each-test div {
   text-decoration: none;
   color: white;
 }
-.MCQTest__Box-parent a .MCQTest__Box {
+.MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box {
   background-image: radial-gradient(#2190F5, #0A489C);
   width: 350px;
   transition: 0.5s;
@@ -31,10 +31,10 @@
   font-family: "Poppines";
   padding: 15px;
 }
-.MCQTest__Box-parent a .MCQTest__Box .MCQTest__Box-title {
+.MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box .MCQTest__Box-title {
   display: flex;
 }
-.MCQTest__Box-parent a .MCQTest__Box .MCQTest__Box-title .MCQTest__Box-title__image {
+.MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box .MCQTest__Box-title .MCQTest__Box-title__image {
   width: 70px;
   height: 70px;
   background-color: rgba(255, 255, 255, 0.439);
@@ -43,25 +43,25 @@
   align-items: center;
   justify-content: center;
 }
-.MCQTest__Box-parent a .MCQTest__Box .MCQTest__Box-title .MCQTest__Box-title__image img {
+.MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box .MCQTest__Box-title .MCQTest__Box-title__image img {
   width: 80%;
   height: 80%;
 }
-.MCQTest__Box-parent a .MCQTest__Box .MCQTest__Box-title p {
+.MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box .MCQTest__Box-title p {
   font-size: 20px;
   padding: 20px;
 }
-.MCQTest__Box-parent a .MCQTest__Box .MCQTest__Box-content p {
+.MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box .MCQTest__Box-content p {
   font-size: 15px;
   margin: 20px;
 }
-.MCQTest__Box-parent a .MCQTest__Box .MCQTest__Box-content p img {
+.MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box .MCQTest__Box-content p img {
   float: left;
   width: 20px;
   height: 20px;
   margin-right: 10px;
 }
-.MCQTest__Box-parent a .MCQTest__Box:hover {
+.MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box:hover {
   box-shadow: white;
   transform: scale(1.05);
 }
