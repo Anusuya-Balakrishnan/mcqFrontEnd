@@ -50,10 +50,10 @@ export function Navbar() {
             </div>
             <div className="MCQ-userProfile__options">
               <div className="editOption">
-                <a href=""> Edit Profile </a>
+                <div href=""> Edit Profile </div>
               </div>
               <div className="logoutOption" onClick={logoutFunction}>
-                <a href="">Logout</a>
+                <div href="">Logout</div>
               </div>
 
               {/* <div class="logoutOption">

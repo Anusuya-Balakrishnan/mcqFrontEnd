@@ -70,10 +70,8 @@ export function TestInstruction() {
       languageId: languageId,
       level: level,
     });
-  }, [time]);
-  useEffect(() => {
-    console.log(questions);
-  }, [time]);
+  }, [responseData]);
+
   return (
     <>
       {localStorage.getItem("token") ? (

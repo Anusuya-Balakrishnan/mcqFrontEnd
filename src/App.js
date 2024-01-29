@@ -18,11 +18,14 @@ import Context from "./components/Context.jsx";
 function App() {
   const contextValue = useContext(Context);
   const [questions, setQuestions] = useState({});
+  const [question_id, setQuestion_id] = useState({});
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Context.Provider value={{ questions, setQuestions }}>
+        <Context.Provider
+          value={{ questions, setQuestions, question_id, setQuestion_id }}
+        >
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

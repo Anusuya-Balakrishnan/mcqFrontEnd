@@ -8,72 +8,53 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 export function QuestionPage() {
-  const { questions, setQuestions } = useContext(Context);
+  // data from test instruction page
+  const { questions, setQuestions, question_id, setQuestion_id } =
+    useContext(Context);
+
   const navigate = useNavigate();
   let { topicName } = useParams();
-  const [actualQuestions, setActualQuestions] = useState(questions.key);
+
+  const [actualQuestions, setActualQuestions] = useState({});
+  const [id_list, setId_list] = useState([]);
   const [count, setCount] = useState(0);
-  const [id_list, setId_list] = useState(Object.keys(actualQuestions));
-  const [currentQuestion, setcurrentQuestion] = useState(
-    actualQuestions[id_list[count]]
-  );
-  const [correctAnswer, setCorrectAnswer] = useState(currentQuestion["answer"]);
+  const [currentQuestion, setcurrentQuestion] = useState({});
+  const [correctAnswer, setCorrectAnswer] = useState();
   const [currentAnswer, setCurrentAnswer] = useState(null);
   const [resultList, setResultList] = useState({});
-  const [mark, setMark] = useState(0);
+  const [topicIdData, settopicId] = useState(questions["topicId"]);
+  const [languageIdData, setLanguageIdData] = useState(questions["languageId"]);
+  const [level, setLevel] = useState(questions["level"]);
+  const [resultObject, setResultObject] = useState({});
 
-  const postResultData = async () => {
-    try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/mcq/add_resultData/`,
-        {
-          headers: {
-            Authorization: `Token ${localStorage.getItem("token")}`,
-            // You can include other headers as needed
-          },
-        },
-        {
-          resultData: resultList,
-        }
-      );
-    } catch (error) {
-      console.log("Error:", error);
+  useEffect(() => {
+    setActualQuestions(questions.key);
+    setId_list(Object.keys(questions.key));
+  }, [questions.key]);
+
+  useEffect(() => {
+    if (id_list.length > 0) {
+      setcurrentQuestion(actualQuestions[id_list[count]]);
     }
-  };
+  }, [id_list, count]);
 
-  // function changeQuestionNumber() {
-  //   console.log(correctAnswer);
-  //   setResultList((prevResultList) => ({
-  //     ...prevResultList,
-  //     [id_list[count]]: currentAnswer,
-  //   }));
-
-  //   if (count < id_list.length - 1) {
-  //     setCount((prevIndex) => prevIndex + 1);
-
-  //     setcurrentQuestion(
-  //       (prevQuestions) => actualQuestions[id_list[count + 1]]
-  //     );
-  //     setCorrectAnswer((prevAnswer) => currentQuestion["answer"]);
-  //   } else {
-  //     navigate("/resultPage");
-  //   }
-  //   console.log(resultList);
-  // }
+  useEffect(() => {}, [id_list]);
   function changeQuestionNumber() {
     // Move to the next question
     if (count < id_list.length - 1) {
       setCount((prevIndex) => prevIndex + 1);
-
       // Clear the selected answer when moving to the next question
       setCurrentAnswer((preValue) => null);
 
-      setcurrentQuestion(
-        (prevQuestions) => actualQuestions[id_list[count + 1]]
-      );
+      setcurrentQuestion((prevQuestions) => actualQuestions[id_list[count]]);
     } else {
-      navigate("/resultPage");
-      // postResultData();
+      // Add the result value for the current question
+      setResultObject((resultObject) => ({
+        resultList: resultList,
+        topicId: topicIdData,
+        languageId: languageIdData,
+        level: level,
+      }));
     }
     // Uncheck all radio buttons by resetting the state
     const radioButtons = document.getElementsByName("option");
@@ -81,17 +62,13 @@ export function QuestionPage() {
       button.checked = false;
     });
   }
+
   useEffect(() => {
     // Set the correct answer for the next question after state update
     setCorrectAnswer(() => currentQuestion["answer"]);
   }, [currentQuestion]);
 
-  useEffect(() => {
-    // Perform actions after the state has been updated
-    console.log(correctAnswer);
-  }, [correctAnswer]);
   function handleAnswer(data) {
-    console.log(data);
     setCurrentAnswer(() => data);
     // Check if the selected answer is correct
     const isCorrect = data === correctAnswer;
@@ -106,10 +83,39 @@ export function QuestionPage() {
     }));
   }
 
+  const postResultData = async () => {
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/mcq/add_resultData/`,
+        {
+          resultData: resultObject,
+        },
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+            // You can include other headers as needed
+          },
+        }
+      );
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
   useEffect(() => {
-    // Log the updated resultList whenever it changes
-    console.log(resultList);
-  }, [resultList]);
+    // Check if resultObject is not null and has the necessary properties
+    if (
+      resultObject &&
+      resultObject.resultList &&
+      resultObject.topicId &&
+      resultObject.languageId &&
+      resultObject.level
+    ) {
+      postResultData();
+      setQuestion_id(id_list);
+      navigate("/resultPage");
+    }
+  }, [resultObject]); // The effect will run whenever resultObject changes
+
   return (
     <>
       {localStorage.getItem("token") ? (
@@ -122,7 +128,7 @@ export function QuestionPage() {
                 <form id="questionForm">
                   <span className="questionNumber"> {count + 1} </span>
                   <span className="question-page-content__questions">
-                    {currentQuestion["question"]}
+                    {currentQuestion["question"] || ""}
                   </span>
                   <div className="question-page-content__optionParent">
                     <div className="question-page-content__options">
@@ -131,9 +137,17 @@ export function QuestionPage() {
                         name="option"
                         className="option"
                         onChange={(e) => handleAnswer(e.target.value)}
-                        value={currentQuestion["option"][0]}
+                        value={
+                          currentQuestion["option"]
+                            ? currentQuestion["option"][0]
+                            : ""
+                        }
                       />
-                      <p>{currentQuestion["option"][0]}</p>
+                      <p>
+                        {currentQuestion["option"]
+                          ? currentQuestion["option"][0]
+                          : ""}
+                      </p>
                     </div>
                     <div className="question-page-content__options">
                       <input
@@ -141,9 +155,17 @@ export function QuestionPage() {
                         name="option"
                         className="option"
                         onChange={(e) => handleAnswer(e.target.value)}
-                        value={currentQuestion["option"][1]}
+                        value={
+                          currentQuestion["option"]
+                            ? currentQuestion["option"][1]
+                            : ""
+                        }
                       />
-                      <p>{currentQuestion["option"][1]}</p>
+                      <p>
+                        {currentQuestion["option"]
+                          ? currentQuestion["option"][1]
+                          : ""}
+                      </p>
                     </div>
 
                     <div className="question-page-content__options">
@@ -152,9 +174,17 @@ export function QuestionPage() {
                         name="option"
                         className="option"
                         onChange={(e) => handleAnswer(e.target.value)}
-                        value={currentQuestion["option"][2]}
+                        value={
+                          currentQuestion["option"]
+                            ? currentQuestion["option"][2]
+                            : ""
+                        }
                       />
-                      <p>{currentQuestion["option"][2]}</p>
+                      <p>
+                        {currentQuestion["option"]
+                          ? currentQuestion["option"][2]
+                          : ""}
+                      </p>
                     </div>
                     <div className="question-page-content__options">
                       <input
@@ -162,9 +192,17 @@ export function QuestionPage() {
                         name="option"
                         className="option"
                         onChange={(e) => handleAnswer(e.target.value)}
-                        value={currentQuestion["option"][3]}
+                        value={
+                          currentQuestion["option"]
+                            ? currentQuestion["option"][3]
+                            : ""
+                        }
                       />
-                      <p>{currentQuestion["option"][3]}</p>
+                      <p>
+                        {currentQuestion["option"]
+                          ? currentQuestion["option"][3]
+                          : ""}
+                      </p>
                     </div>
                   </div>
 
