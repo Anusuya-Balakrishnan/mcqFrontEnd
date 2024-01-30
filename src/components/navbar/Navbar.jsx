@@ -4,10 +4,11 @@ import navbar from "./navbar.css";
 import dhoni from "./images/dhoni.jpg";
 import oaLogo from "./images/oceanacademy Logo.svg";
 import medal from "./images/medal.svg";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export function Navbar() {
+  const navigate = useNavigate();
   const logoutFunction = async (e) => {
     e.preventDefault();
     try {
@@ -61,7 +62,13 @@ export function Navbar() {
               </div> */}
             </div>
             <div className="MCQ-userProfile__leaderBoard">
-              <a href="">Leader Board</a>
+              <div
+                onClick={() => {
+                  navigate("/leaderBoardPage");
+                }}
+              >
+                Leader Board
+              </div>
               <img src={medal} alt="medal" />
             </div>
           </div>

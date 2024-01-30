@@ -92,7 +92,8 @@
                 height: 100%;
                 width: 100%;
                 // background-color: aqua;
-                a{
+                div{
+                    cursor: pointer;
                     text-decoration: none;
                     color: $button-color;
                     transition: 0.5s;

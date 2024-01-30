@@ -91,12 +91,13 @@
   height: 100%;
   width: 100%;
 }
-.MCQ-Navbar .MCQ-sidebar .MCQ-userProfile__leaderBoard a {
+.MCQ-Navbar .MCQ-sidebar .MCQ-userProfile__leaderBoard div {
+  cursor: pointer;
   text-decoration: none;
   color: #2D81F7;
   transition: 0.5s;
 }
-.MCQ-Navbar .MCQ-sidebar .MCQ-userProfile__leaderBoard a:hover {
+.MCQ-Navbar .MCQ-sidebar .MCQ-userProfile__leaderBoard div:hover {
   -webkit-text-decoration: 2px underline solid #2D81F7;
           text-decoration: 2px underline solid #2D81F7;
 }

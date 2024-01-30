@@ -14,6 +14,7 @@ import { ResultPage } from "./components/resultPage/ResultPage";
 import { MyContextProvider } from "./components/MyContext.jsx";
 // import { createContext } from "react";
 import Context from "./components/Context.jsx";
+import LeaderBoardPage from "./components/leaderboard/LeaderBoardPage.jsx";
 
 function App() {
   const contextValue = useContext(Context);
@@ -37,6 +38,7 @@ function App() {
             />
             <Route path="/testPage/:topicName" element={<QuestionPage />} />
             <Route path="/resultPage" element={<ResultPage />} />
+            <Route path="/leaderBoardPage" element={<LeaderBoardPage />} />
           </Routes>
         </Context.Provider>
       </BrowserRouter>
