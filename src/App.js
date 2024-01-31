@@ -15,9 +15,11 @@ import { MyContextProvider } from "./components/MyContext.jsx";
 // import { createContext } from "react";
 import Context from "./components/Context.jsx";
 import LeaderBoardPage from "./components/leaderboard/LeaderBoardPage.jsx";
+import PasswordPage from "./components/password/PasswordPage.jsx";
 
 function App() {
   const contextValue = useContext(Context);
+  const [registerId, setRegisterId] = useState("");
   const [questions, setQuestions] = useState({});
   const [question_id, setQuestion_id] = useState({});
 
@@ -25,10 +27,19 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Context.Provider
-          value={{ questions, setQuestions, question_id, setQuestion_id }}
+          value={{
+            questions,
+            setQuestions,
+            question_id,
+            setQuestion_id,
+            registerId,
+            setRegisterId,
+          }}
         >
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/passwordPage" element={<PasswordPage />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/topList/:id" element={<TopList />} />
             <Route path="/content/:id" element={<TopContent />} />

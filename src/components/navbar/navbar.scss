@@ -5,9 +5,11 @@
 .MCQ-Navbar{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    background-color:$newBg_color;
     height: 100px;
-    padding: 40px;
-    padding-bottom: 0;
+    padding: 0 40px;
+    // padding-bottom: 0;
     .MCQ-logo{
         width: 250px;
         height: 60px;
@@ -17,56 +19,72 @@
         }
     }
     .MCQ-sidebar{
+        display: flex;
+
         height: 50px;
         .MCQ-userProfile-side{
             color: white;
             position: relative;
+            // padding-right: 30px;
            .MCQ-userProfile{
             display: flex;
             cursor: pointer;
-            background-image:$background-color;
+
+            width: 150px;
             height: 100%;
+            // background-image:$background-color;
+            text-align: center;
             border-bottom-left-radius: 10px;
             border-top-left-radius: 10px;
             border-bottom-right-radius:50px;
             border-top-right-radius: 50px;
             
                 p{
-                    padding: 10px;
-                    line-height: 2;
-                }
-                .MCQ-userProfile__image{
-                    width: 50px;
-                    height: 50px;
-                    margin: 0 5px;
-                    margin-right: 0;
-                    border-radius: 50%;
-            
-                img{
-                    object-fit: cover;
+                    // padding: 10px;
                     width: 100%;
-                    height: 100%;
-                    border-radius: 50%;
-                    }
+                    line-height: 2;
+                    font-size: 25px;
+
                 }
+                // .MCQ-userProfile__image{
+                //     width: 50px;
+                //     height: 50px;
+                //     margin: 0 5px;
+                //     margin-right: 0;
+                //     border-radius: 50%;
+                //     background-color: white;
+                //     color:$newBg_color;
+                //     font-size: 30px;
+            
+                // img{
+                //     object-fit: cover;
+                //     width: 100%;
+                //     height: 100%;
+                //     border-radius: 50%;
+                //     }
+                // }
             }
             
             .MCQ-userProfile__options{
+                position: absolute;
+                width: 150px;
                 display: none;
                 cursor: pointer;
-                background-image: $background-color;
+                background-color: $newBg_color;
+                // background-image: $background-color;
                 padding: 20px;
-                margin-top: 10px;
+                margin-top: 0px;
+                margin-right: 10px;
                 border-radius: 10px;
                 
                 .editOption{
                 text-align: center;
                 padding: 10px;
-                a{
-                    text-decoration: none;
+                div{
+                    // text-decoration: none;
                     color: white;
                     &:hover{
-                        color: rgb(210, 210, 210);
+                        text-decoration: 2px underline solid white;
                     }
                 }
                 }
@@ -87,7 +105,7 @@
                
             }  
             .MCQ-userProfile__leaderBoard{
-                margin: 10px 0;
+                margin: 0 20px;
                 @include flexContent;
                 height: 100%;
                 width: 100%;
@@ -95,10 +113,11 @@
                 div{
                     cursor: pointer;
                     text-decoration: none;
-                    color: $button-color;
+                    color:white;
                     transition: 0.5s;
+                    font-size: 18px;
                     &:hover{
-                        text-decoration: 2px underline solid $button-color;
+                        text-decoration: 2px underline solid white;
                     }
                 }
     

@@ -6,17 +6,11 @@ import axios from "axios";
 import { Home } from "../home/Home";
 export function Signup() {
   const [userName, setUserName] = useState("");
-  const [date, setDate] = useState("");
-  const [dob, setDob] = useState("");
+  const [oceanRegisterNo, setOceanRegisterNo] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [qualification, setQualification] = useState("");
-  const [nationality, setNationality] = useState("");
-  const [workingDesignation, setWorkingDesignation] = useState(null);
-  const [collegeName, setCollegeName] = useState(null);
   const [email, setEmail] = useState("");
-  const [whatsappNumber, setWhatsappNumber] = useState("");
-  const [gender, setGender] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [token, setToken] = useState("");
 
@@ -34,32 +28,19 @@ export function Signup() {
     try {
       const response = await axios.post("http://127.0.0.1:8000/mcq/users/", {
         studentName: userName,
-        date: date,
-        dob: dob,
         mobileNumber: mobileNumber,
-        address: address,
-        qualification: qualification,
-        nationality: nationality,
-        workingDesignation: workingDesignation,
-        studentCollegeName: collegeName,
+        oceanRegisterNo: oceanRegisterNo,
         email: email,
-        whatsappNumber: whatsappNumber,
-        gender: gender,
+        password: password,
       });
       setToken(response.data.token);
       setSuccess(true);
       setUserName("");
-      setAddress("");
-      setCollegeName("");
-      setDate("");
-      setDob("");
-      setEmail("");
+      setOceanRegisterNo("");
       setMobileNumber("");
-      setQualification("");
-      setWorkingDesignation("");
-      setWhatsappNumber("");
-      setGender("");
-      setNationality("");
+      setEmail("");
+      setConfirmPassword("");
+      setPassword("");
 
       localStorage.setItem("token", response?.data?.token);
       localStorage.setItem("username", response?.data?.user?.studentName);
@@ -81,7 +62,18 @@ export function Signup() {
                   <input
                     className="signup-Input"
                     type="text"
-                    placeholder="Name"
+                    placeholder="Ocean Register No"
+                    onChange={(e) => {
+                      setOceanRegisterNo(e.target.value.toUpperCase());
+                    }}
+                    value={oceanRegisterNo}
+                    required
+                  />
+                  <br />
+                  <input
+                    className="signup-Input"
+                    type="text"
+                    placeholder="Full Name"
                     onChange={(e) => {
                       setUserName(e.target.value);
                     }}
@@ -89,18 +81,16 @@ export function Signup() {
                     required
                   />
                   <br />
+
                   <input
-                    type="datetime-local"
-                    className="signup-Input"
-                    // onfocus="(this.type='datetime-local')"
-                    // onblur="(this.type='text')"
-                    // placeholder="Date"
-                    name="date"
+                    type="tel"
+                    class="signup-Input"
+                    placeholder="Mobile Number"
+                    name="mobileNumber"
                     onChange={(e) => {
-                      setDate(e.target.value);
+                      setMobileNumber(e.target.value);
                     }}
-                    // value={date}
-                    value={date}
+                    value={mobileNumber}
                     required
                   />
                   <br />
@@ -116,119 +106,27 @@ export function Signup() {
                   />
                   <br />
                   <input
-                    type="datetime-local"
                     className="signup-Input"
-                    placeholder="Date Of Birth"
-                    name="dob"
+                    type="password"
+                    placeholder="password"
                     onChange={(e) => {
-                      setDob(e.target.value);
+                      setPassword(e.target.value);
                     }}
-                    value={dob}
-                    // onfocus="(this.type='date')"
-                    // onblur="(this.type='text')"
-                    required
-                  />
-                  <br />
-                  <input
-                    type="tel"
-                    class="signup-Input"
-                    placeholder="Mobile Number"
-                    name="mobileNumber"
-                    onChange={(e) => {
-                      setMobileNumber(e.target.value);
-                    }}
-                    value={mobileNumber}
-                    required
-                  />
-                  <br />
-                  <input
-                    type="text"
-                    placeholder="Address"
-                    name="address"
-                    onChange={(e) => {
-                      setAddress(e.target.value);
-                    }}
-                    value={address}
-                    required
-                  />
-                </div>
-                <div class="sign-up-block-form-content">
-                  <input
-                    className="signup-Input"
-                    type="text"
-                    placeholder="Qualification"
-                    name="qualification"
-                    onChange={(e) => {
-                      setQualification(e.target.value);
-                    }}
-                    value={qualification}
+                    name={password}
                     required
                   />
                   <br />
                   <input
                     className="signup-Input"
-                    type="text"
-                    placeholder="Nationality"
-                    name="nationality"
+                    type="password"
+                    placeholder="Confirm password"
                     onChange={(e) => {
-                      setNationality(e.target.value);
+                      setConfirmPassword(e.target.value);
                     }}
-                    value={nationality}
+                    name={confirmPassword}
                     required
                   />
                   <br />
-                  <input
-                    className="signup-Input"
-                    type="text"
-                    placeholder="Working Designation"
-                    name="workingDesignation"
-                    onChange={(e) => {
-                      setWorkingDesignation(e.target.value);
-                    }}
-                    value={workingDesignation}
-                  />
-                  <br />
-                  <input
-                    type="text"
-                    className="signup-Input"
-                    placeholder="College Name(if Student)"
-                    name="collegeName"
-                    onChange={(e) => {
-                      setCollegeName(e.target.value);
-                    }}
-                    value={collegeName}
-                  />
-                  <br />
-                  <input
-                    type="tel"
-                    class="signup-Input"
-                    placeholder="Whatsapp Number"
-                    name="whatsappNumber"
-                    required
-                    onChange={(e) => {
-                      setWhatsappNumber(e.target.value);
-                    }}
-                    value={whatsappNumber}
-                  />
-                  <br />
-                  <input
-                    type="text"
-                    placeholder="Gender"
-                    name="gender"
-                    onChange={(e) => {
-                      setGender(e.target.value);
-                    }}
-                    value={gender}
-                    required
-                  />
-                </div>
-                <div class="sign-up-block-form-image">
-                  <img
-                    src={profileImage}
-                    alt="personprofile"
-                    name="profileImage"
-                  />
-                  <div class="sign-up-form-image-upload">+</div>
                 </div>
               </div>
               <div class="sign-up__button">
@@ -241,3 +139,82 @@ export function Signup() {
     </>
   );
 }
+
+// <div class="sign-up-block-form-content">
+//                   <input
+//                     className="signup-Input"
+//                     type="text"
+//                     placeholder="Qualification"
+//                     name="qualification"
+//                     onChange={(e) => {
+//                       setQualification(e.target.value);
+//                     }}
+//                     value={qualification}
+//                     required
+//                   />
+//                   <br />
+//                   <input
+//                     className="signup-Input"
+//                     type="text"
+//                     placeholder="Nationality"
+//                     name="nationality"
+//                     onChange={(e) => {
+//                       setNationality(e.target.value);
+//                     }}
+//                     value={nationality}
+//                     required
+//                   />
+//                   <br />
+//                   <input
+//                     className="signup-Input"
+//                     type="text"
+//                     placeholder="Working Designation"
+//                     name="workingDesignation"
+//                     onChange={(e) => {
+//                       setWorkingDesignation(e.target.value);
+//                     }}
+//                     value={workingDesignation}
+//                   />
+//                   <br />
+//                   <input
+//                     type="text"
+//                     className="signup-Input"
+//                     placeholder="College Name(if Student)"
+//                     name="collegeName"
+//                     onChange={(e) => {
+//                       setCollegeName(e.target.value);
+//                     }}
+//                     value={collegeName}
+//                   />
+//                   <br />
+//                   <input
+//                     type="tel"
+//                     class="signup-Input"
+//                     placeholder="Whatsapp Number"
+//                     name="whatsappNumber"
+//                     required
+//                     onChange={(e) => {
+//                       setWhatsappNumber(e.target.value);
+//                     }}
+//                     value={whatsappNumber}
+//                   />
+//                   <br />
+//                   <input
+//                     type="text"
+//                     placeholder="Gender"
+//                     name="gender"
+//                     onChange={(e) => {
+//                       setGender(e.target.value);
+//                     }}
+//                     value={gender}
+//                     required
+//                   />
+//                 </div>
+//                 <div class="sign-up-block-form-image">
+//                   <img
+//                     src={profileImage}
+//                     alt="personprofile"
+//                     name="profileImage"
+//                   />
+//                   <div class="sign-up-form-image-upload">+</div>
+//                 </div>

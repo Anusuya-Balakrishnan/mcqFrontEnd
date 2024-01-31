@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import ReactDOM from "react-dom/client";
+import Context from "../Context";
 import { Link } from "react-router-dom";
 import login from "./login.css";
 import oaLogo from "./images/oceanacademyLogoWhite.svg";
@@ -8,12 +9,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const { registerId, setRegisterId } = useContext(Context);
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const userRef = useRef();
   const errorRef = useRef();
-  const [token, setToken] = useState("");
-  const [success, setSuccess] = useState(false);
+
   const [erMessage, setError] = useState("");
 
   const navigateSignup = () => {
@@ -22,66 +23,44 @@ export default function Login() {
   // useEffect(() => {
   //   userRef.current.focus();
   // });
-  useEffect(() => {
-    var retrievedToken = localStorage.getItem("token");
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("username");
-    if (retrievedToken != undefined) {
-      setToken(retrievedToken);
-      console.log("retrievedToken", retrievedToken);
-    }
-  }, []);
+  // useEffect(() => {
+  //   var retrievedToken = localStorage.getItem("token");
+  //   // localStorage.removeItem("token");
+  //   // localStorage.removeItem("username");
+  //   if (retrievedToken != undefined) {
+  //     setToken(retrievedToken);
+  //     console.log("retrievedToken", retrievedToken);
+  //   }
+  // }, []);
 
   const result = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/mcq/userLogin/",
-        { email: user }
+        "http://127.0.0.1:8000/mcq/custom_user_check/",
+        { oceanRegisterNo: user }
       );
-      setSuccess(true);
+      if (response?.data?.message) {
+        setRegisterId(user);
+        setError(false);
+        navigate("/passwordPage");
+      } else {
+        setError(true);
+      }
       setUser("");
-      localStorage.setItem("token", response?.data?.token);
-      localStorage.setItem("username", response?.data?.user?.studentName);
-      setToken(response?.data?.token);
-      setError(false);
+      // localStorage.setItem("token", response?.data?.token);
+      // localStorage.setItem("username", response?.data?.user?.studentName);
+      // setToken(response?.data?.token);
+      // setError(false);
     } catch (error) {
       setUser("");
-      setError("No response");
+      setError(true);
     }
   };
-  function checkCredential(e) {
-    e.preventDefault();
-    console.log("Hello");
-    // axios
-    //   .get("http://127.0.0.1:8000/mcq/users/")
-    //   .then((response) => {
-    //     setData(response.data);
-    //     console.log(data);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error fetching data:");
-    //   });
-    // http://127.0.0.1:8000/mcq/userLogin/
-    axios
-      .post("http://127.0.0.1:8000/mcq/userLogin/", {})
-      .then((response) => {
-        setToken(response.data.token);
-        setSuccess(true);
-        setError(false);
-        setUser("");
-        console.log("token", token);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:");
-        setSuccess(false);
-        setError(true);
-      });
-    console.log(success);
-  }
+
   return (
     <>
-      {success || Boolean(token) ? (
+      {localStorage.getItem("token") != null ? (
         <section>
           <Home />
         </section>
@@ -97,13 +76,13 @@ export default function Login() {
 
                 <div className="home-page__sigin-box-middleBox">
                   <input
-                    type="email"
+                    type="text"
                     ref={userRef}
                     onChange={(e) => {
                       setUser(e.target.value);
                     }}
-                    placeholder="Enter Email Id"
-                    name="emailId"
+                    placeholder="Enter Ocean Register No"
+                    name="oceanRegisterNo"
                     value={user}
                     autoComplete="OFF"
                     required
@@ -113,9 +92,10 @@ export default function Login() {
                     style={{
                       color: "red",
                       display: erMessage ? "block" : "none",
+                      paddingBottom: "10px",
                     }}
                   >
-                    Invalid Credential
+                    Invalid Register No
                   </p>
                   <div className="signup_box">
                     Don't you have Account?{" "}
@@ -123,7 +103,7 @@ export default function Login() {
                   </div>
                 </div>
                 <div className="sigin-box__button">
-                  <button className="button">Sign in</button>
+                  <button className="button">Next</button>
                 </div>
               </form>
             </div>
