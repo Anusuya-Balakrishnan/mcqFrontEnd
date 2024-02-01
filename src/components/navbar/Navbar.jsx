@@ -6,6 +6,9 @@ import oaLogo from "./images/oceanacademy Logo.svg";
 import newoaLogo from "./images/oaLogo.svg";
 import medal from "./images/medal.svg";
 import { useNavigate } from "react-router-dom";
+import { MdOutlinePersonOutline } from "react-icons/md";
+import { MdKeyboardArrowDown } from "react-icons/md";
+
 import axios from "axios";
 
 export function Navbar() {
@@ -59,14 +62,16 @@ export function Navbar() {
               Leader Board
             </div>
           </div>
+          <div className="MCQ-userProfile__leaderBoard">
+            <div>Dashboard</div>
+          </div>
+
           <div className="MCQ-userProfile-side">
             <div className="MCQ-userProfile">
-              <p> {userName[0].toUpperCase() + userName.slice(1)}</p>
-
-              {/* <div className="MCQ-userProfile__image">
-                <img src={dhoni} alt="userImage" />
-                {userName[0].toUpperCase()}
-              </div> */}
+              <p> {userName[0].toUpperCase() + userName.slice(1)} </p>
+              <span>
+                <MdKeyboardArrowDown />
+              </span>
             </div>
             <div className="MCQ-userProfile__options">
               <div className="editOption">

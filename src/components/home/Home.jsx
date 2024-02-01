@@ -24,6 +24,7 @@ export function Home() {
         );
 
         setData(response?.data?.mcqList);
+        console.log(localStorage.getItem("token"));
       } catch (error) {
         console.log("Error:", error);
       }
@@ -54,18 +55,39 @@ export function Home() {
         <div className="Homepage">
           <Navbar />
           <div className="MCQListPage__body">
-            <div className="MCQListPage__title">MCQ'S List</div>
+            <div className="MCQListPage__title">
+              <h1 className="title">Welcome to Ocean Academy!</h1>
+              <p className="subtitle1">
+                Navigate the World of Knowledge with Our Engaging Quizzes
+              </p>
+              <p className="subtitle2">Explore Quizzes</p>
+              <p className="content">
+                Dive into a world of curiosity and test your knowledge across
+                various subjects. Select from our range of captivating quizzes
+                that cater to all interests.
+              </p>
+            </div>
             <div className="MCQ-lists">
               {mcqList.map((item, index) => (
-                <div className="MCQ-list__Each-test">
+                <div className="MCQ-lists_subParent">
                   <div
+                    className="MCQ-list__Each-test"
                     key={index}
-                    onClick={() => {
-                      userNavigate(item.id);
+                    onClick={() =>
+                      item.mcqName === "Programming" && userNavigate(item.id)
+                    }
+                  >
+                    {item.mcqName} Quizzes
+                  </div>
+                  <p
+                    style={{
+                      display:
+                        item.mcqName === "Programming" ? "none" : "block",
+                      color: "red",
                     }}
                   >
-                    {item.mcqName} MCQ's
-                  </div>
+                    yet to unlock
+                  </p>
                 </div>
               ))}
             </div>

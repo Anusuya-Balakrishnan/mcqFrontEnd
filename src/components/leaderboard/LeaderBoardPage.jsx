@@ -45,10 +45,10 @@ function LeaderBoardPage() {
           <section className="leaderboardPage">
             <div className="leaderboardHeading">
               <div className="leaderboardHeading_title">LeaderBoard</div>
-              <div className="leaderboardHeading_subtitle">
+              {/* <div className="leaderboardHeading_subtitle">
                 Top {resultData ? resultData.length : ""} Users in the
                 Community.
-              </div>
+              </div> */}
             </div>
             <div className="leaderboard_table">
               <div className="leaderboard_table_heading">

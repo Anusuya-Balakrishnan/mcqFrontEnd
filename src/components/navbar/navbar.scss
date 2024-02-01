@@ -10,6 +10,7 @@
     height: 100px;
     padding: 0 40px;
     // padding-bottom: 0;
+    // margin-bottom: 20px;
     .MCQ-logo{
         width: 250px;
         height: 60px;
@@ -20,8 +21,34 @@
     }
     .MCQ-sidebar{
         display: flex;
+        // height: 50px;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        .MCQ-userProfile__leaderBoard{
+            margin: 0 20px;
+            @include flexContent;
+            // height: 100%;
+            // width: 100%;
+            // background-color: aqua;
+            div{
+                // width: auto;
+                cursor: pointer;
+                text-decoration: none;
+                color:white;
+                transition: 0.5s;
+                font-size: 18px;
+                &:hover{
+                    text-decoration: 2px underline solid white;
+                }
+            }
 
-        height: 50px;
+            img{
+                margin-left: 10px;
+                width: 30px;
+                height: 30px;
+            }
+           }
         .MCQ-userProfile-side{
             color: white;
             position: relative;
@@ -41,10 +68,20 @@
             
                 p{
                     // padding: 10px;
-                    width: 100%;
-                    line-height: 2;
+                    // width: 100%;
+                    // line-height: -2;
+                    
                     font-size: 25px;
+                    // margin: 0 20px;
 
+                }
+                span{
+                    // background-color: white;
+                    // width: 50px;
+                    // height: 50px;
+                    font-size: 30px;
+                    // line-height:- 2;
+                    // border-radius: 50%;
                 }
                 // .MCQ-userProfile__image{
                 //     width: 50px;
@@ -104,29 +141,7 @@
             }
                
             }  
-            .MCQ-userProfile__leaderBoard{
-                margin: 0 20px;
-                @include flexContent;
-                height: 100%;
-                width: 100%;
-                // background-color: aqua;
-                div{
-                    cursor: pointer;
-                    text-decoration: none;
-                    color:white;
-                    transition: 0.5s;
-                    font-size: 18px;
-                    &:hover{
-                        text-decoration: 2px underline solid white;
-                    }
-                }
-    
-                img{
-                    margin-left: 10px;
-                    width: 30px;
-                    height: 30px;
-                }
-               }
+            
     }
    
 }
