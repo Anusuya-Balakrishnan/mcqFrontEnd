@@ -7,7 +7,7 @@
 }
 
 .mcqTestList {
-  height: auto;
+  height: 100vh;
   padding-left: 150px;
   background-color: rgb(240, 242, 246);
 }
@@ -18,7 +18,8 @@
   color: #072c50;
 }
 .mcqTestList .mcqTestList__Title h1 {
-  font-size: 38px;
+  font-size: 35px;
+  font-weight: 400;
 }
 .mcqTestList .mcqTestList__Title p {
   margin-top: 20px;
@@ -83,6 +84,7 @@
 
 @media (max-width: 1050px) {
   .mcqTestList {
+    height: auto;
     padding-left: 0;
   }
   .mcqTestList .mcqTestList__Title {
@@ -169,6 +171,12 @@
     width: 90%;
     margin: 20px;
     padding: 10px;
+  }
+  .mcqTestList .MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box .MCQTest__Box-title {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .mcqTestList .MCQTest__Box-parent .MCQ-list__Each-test div .MCQTest__Box .MCQTest__Box-title .MCQTest__Box-title__image img {
     width: 80%;

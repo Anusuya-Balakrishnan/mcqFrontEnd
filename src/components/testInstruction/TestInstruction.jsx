@@ -80,23 +80,47 @@ export function TestInstruction() {
           <section>
             <div className="instruction-page">
               <div className="instruction-page__content">
-                <div className="instruction-page__title">{topicName}</div>
+                <div className="instruction-page__title">
+                  {topicName} Test Instructions:
+                </div>
                 <div className="instruction-page__content_details">
-                  <p>Test Instructions</p>
+                  <p>Test Details:</p>
                   <ul>
                     <li>Total Number of Questions: {totalQuestions}</li>
                     <li>Each Questions carries 1 mark</li>
                     <li>Time Allocated: {totalTime} minutes</li>
                   </ul>
-                  <button>
-                    <Link to={`/testPage/${topicNameData}`}>Start Test</Link>
-                  </button>
+                  <p>Instructions:</p>
+                  <ul>
+                    <li>
+                      <b>Read Carefully:</b> Take your time to read each
+                      question thoroughly.
+                    </li>
+                    <li>
+                      <b>Answering:</b> Provide your answers in the allocated
+                      spaces or select the correct option.
+                    </li>
+                    <li>
+                      <b>Time Management:</b> Keep an eye on the timer. Manage
+                      your time wisely to answer all questions within the
+                      allocated {totalTime}
+                      minutes.
+                    </li>
+                    <li>
+                      <b>Submission:</b> Once you've completed all questions or
+                      when the timer runs out, click "Submit" to view your
+                      results.
+                    </li>
+                  </ul>
+                  <p>Good Luck &#128512;</p>
+                  <div className="submitBtn">
+                    <button>
+                      <Link to={`/testPage/${topicNameData}`}>Start Quiz</Link>
+                    </button>
+                  </div>
 
                   {/* <p>{dummy.question}</p> */}
                 </div>
-              </div>
-              <div className="instruction-page_image">
-                <img src={testInstructionImage} alt="" />
               </div>
             </div>
           </section>

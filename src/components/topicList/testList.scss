@@ -4,7 +4,7 @@
 
 
 .mcqTestList{
-    height: auto;
+    height: 100vh;
     padding-left:150px ;
     background-color:$newPlainBg;
     .mcqTestList__Title{
@@ -16,7 +16,8 @@
         // font-size: 30px;
         color:$newBg_color;
         h1{
-            font-size: 38px;
+            font-size: 35px;
+            font-weight: 400;
         }
         p{
             margin-top: 20px;
@@ -93,6 +94,7 @@
 
 @media (max-width:1050px) {
     .mcqTestList{
+        height: auto;
         padding-left:0 ;
         .mcqTestList__Title{
             width: 100%;
@@ -209,7 +211,8 @@
                 padding: 10px;
                 .MCQTest__Box-title{
                     
-                    
+                    flex-direction: column;
+                    @include flexContent;
                     .MCQTest__Box-title__image{
                            
                         img{

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import ReactDOM from "react-dom/client";
 import Context from "../Context";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import login from "../login/login.css";
 import oaLogo from "./images/oceanacademyLogoWhite.svg";
 import { Home } from "../home/Home";
@@ -11,11 +11,17 @@ function PasswordPage() {
   const { registerId, setRegisterId } = useContext(Context);
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
-  const userRef = useRef();
-  const errorRef = useRef();
+  const passwordRef = useRef(null);
+  const errorRef = useRef(null);
   const [token, setToken] = useState("");
   const [success, setSuccess] = useState(false);
   const [erMessage, setError] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     console.log("registerId", registerId);
@@ -23,6 +29,12 @@ function PasswordPage() {
   const navigateSignup = () => {
     navigate("/signup");
   };
+  useEffect(() => {
+    // Focus on the input element when the component mounts
+    if (passwordRef.current !== null) {
+      passwordRef.current.focus();
+    }
+  }, []); // Empty dependency array ensures the effect runs only once on mount
 
   const result = async (e) => {
     e.preventDefault();
@@ -66,10 +78,11 @@ function PasswordPage() {
                 <form onSubmit={result}>
                   <div className="home-page__sigin-box-title">SIGN IN</div>
 
-                  <div className="home-page__sigin-box-middleBox">
+                  <div className="passwordBox">
                     <input
-                      type="password"
-                      ref={userRef}
+                      // type="password"
+                      type={showPassword ? "text" : "password"}
+                      ref={passwordRef}
                       onChange={(e) => {
                         setPassword(e.target.value.toUpperCase());
                       }}
@@ -79,6 +92,9 @@ function PasswordPage() {
                       autoComplete="OFF"
                       required
                     />
+                    <button type="button" onClick={handleTogglePassword}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
                     <br />
                     <p
                       style={{

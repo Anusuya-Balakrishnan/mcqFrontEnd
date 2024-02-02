@@ -13,7 +13,6 @@ export function TopContent() {
 
   // getting value from useParams
   let { id } = useParams();
-  console.log("id", id);
   const [data, setData] = useState([]);
   const [topics, setTopics] = useState([]);
   useEffect(() => {
@@ -39,7 +38,7 @@ export function TopContent() {
   }, []);
 
   useEffect(() => {
-    console.log("data", data);
+    // console.log("data", data);
     const array = [];
     for (let eachData of data) {
       // console.log("eachData", eachData);
@@ -60,8 +59,12 @@ export function TopContent() {
 
           <div className="test-content__parent">
             <div className="test-content__heading">
-              <div className="test-content__title"> language MCQ'S</div>
-              <div className="test-content">Test content</div>
+              <div className="test-content__title">
+                Choose a topic to focus your quiz questions.
+              </div>
+              <div className="test-content">
+                Click your selection to proceed.
+              </div>
             </div>
             <div className="test-content-lists">
               {topics.map((item, index) => (

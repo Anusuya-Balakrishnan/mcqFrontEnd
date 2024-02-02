@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import signup from "./signup.css";
 import profileImage from "./image/personprofile.svg";
@@ -13,7 +13,7 @@ export function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [token, setToken] = useState("");
-
+  const userRef = useRef(null);
   useEffect(() => {
     var retrievedToken = localStorage.getItem("token");
     // localStorage.removeItem("token");
@@ -23,6 +23,13 @@ export function Signup() {
       console.log("retrievedToken", retrievedToken);
     }
   }, []);
+  useEffect(() => {
+    // Focus on the input element when the component mounts
+    if (userRef.current !== null) {
+      userRef.current.focus();
+    }
+  }, []); // Empty dependency array ensures the effect runs only once on mount
+
   const addUser = async (e) => {
     e.preventDefault();
     try {
@@ -54,14 +61,18 @@ export function Signup() {
         <Home />
       ) : (
         <section id="CreateAccount">
-          <h1 class="sign-up-heading">Create Account</h1>
-          <div class="sign-up-block">
+          <div className="sign-up-block">
+            <div className="sign-up-heading">
+              <h1>Join Us Today!</h1>
+              <p>Sign Up Now to Become a Member</p>
+            </div>
             <form onSubmit={addUser}>
-              <div class="sign-up-block-form">
-                <div class="sign-up-block-form-content">
+              <div className="sign-up-block-form">
+                <div className="sign-up-block-form-content">
                   <input
                     className="signup-Input"
                     type="text"
+                    ref={userRef}
                     placeholder="Ocean Register No"
                     onChange={(e) => {
                       setOceanRegisterNo(e.target.value.toUpperCase());
@@ -73,7 +84,7 @@ export function Signup() {
                   <input
                     className="signup-Input"
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Enter your Full Name"
                     onChange={(e) => {
                       setUserName(e.target.value);
                     }}
@@ -84,8 +95,8 @@ export function Signup() {
 
                   <input
                     type="tel"
-                    class="signup-Input"
-                    placeholder="Mobile Number"
+                    className="signup-Input"
+                    placeholder="Enter your Mobile Number"
                     name="mobileNumber"
                     onChange={(e) => {
                       setMobileNumber(e.target.value);
@@ -97,7 +108,7 @@ export function Signup() {
                   <input
                     className="signup-Input"
                     type="email"
-                    placeholder="Email Id"
+                    placeholder="Enter your Email Id"
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
@@ -108,7 +119,7 @@ export function Signup() {
                   <input
                     className="signup-Input"
                     type="password"
-                    placeholder="password"
+                    placeholder="Enter new password"
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
@@ -119,7 +130,7 @@ export function Signup() {
                   <input
                     className="signup-Input"
                     type="password"
-                    placeholder="Confirm password"
+                    placeholder="Enter Confirm password"
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
                     }}
@@ -129,8 +140,8 @@ export function Signup() {
                   <br />
                 </div>
               </div>
-              <div class="sign-up__button">
-                <button class="btn">Sign Up</button>
+              <div className="sign-up__button">
+                <button className="btn">Sign Up</button>
               </div>
             </form>
           </div>

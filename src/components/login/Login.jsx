@@ -12,8 +12,8 @@ export default function Login() {
   const { registerId, setRegisterId } = useContext(Context);
   const navigate = useNavigate();
   const [user, setUser] = useState("");
-  const userRef = useRef();
-  const errorRef = useRef();
+  const userRef = useRef(null);
+  const errorRef = useRef(null);
 
   const [erMessage, setError] = useState("");
 
@@ -32,6 +32,13 @@ export default function Login() {
   //     console.log("retrievedToken", retrievedToken);
   //   }
   // }, []);
+
+  useEffect(() => {
+    // Focus on the input element when the component mounts
+    if (userRef.current !== null) {
+      userRef.current.focus();
+    }
+  }, []); // Empty dependency array ensures the effect runs only once on mount
 
   const result = async (e) => {
     e.preventDefault();
@@ -79,7 +86,7 @@ export default function Login() {
                     type="text"
                     ref={userRef}
                     onChange={(e) => {
-                      setUser(e.target.value);
+                      setUser(e.target.value.toUpperCase());
                     }}
                     placeholder="Enter Ocean Register No"
                     name="oceanRegisterNo"
@@ -99,7 +106,7 @@ export default function Login() {
                   </p>
                   <div className="signup_box">
                     Don't you have Account?{" "}
-                    <a onClick={navigateSignup}>Sign Up</a>
+                    <span onClick={navigateSignup}>Sign Up</span>
                   </div>
                 </div>
                 <div className="sigin-box__button">

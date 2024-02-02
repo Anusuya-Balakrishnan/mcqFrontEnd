@@ -8,42 +8,42 @@
 
 .instruction-page {
   width: 100%;
-  height: 650px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+  min-height: 89vh;
+  height: auto;
+  background-color: rgb(240, 242, 246);
+  text-align: left;
+  padding-top: 50px;
 }
 .instruction-page .instruction-page__content {
   width: auto;
   height: auto;
-  margin-right: 150px;
+  padding-left: 150px;
 }
 .instruction-page .instruction-page__content .instruction-page__title {
   color: #2D81F7;
   font-size: 25px;
 }
-.instruction-page .instruction-page__content .instruction-page__content_details {
-  margin: 70px;
-  margin-top: 40px;
-}
 .instruction-page .instruction-page__content .instruction-page__content_details p {
   color: black;
   font-size: 20px;
+  font-weight: 500;
   padding: 20px;
 }
 .instruction-page .instruction-page__content .instruction-page__content_details ul {
   margin-left: 50px;
 }
 .instruction-page .instruction-page__content .instruction-page__content_details ul li {
-  padding: 20px;
+  padding: 10px;
   list-style-type: disc;
 }
 .instruction-page .instruction-page__content .instruction-page__content_details ::marker {
   color: #2D81F7;
   background-color: black;
 }
-.instruction-page .instruction-page__content .instruction-page__content_details button {
+.instruction-page .instruction-page__content .instruction-page__content_details .submitBtn {
+  width: 100%;
+}
+.instruction-page .instruction-page__content .instruction-page__content_details .submitBtn button {
   margin: 20px;
   border: 0;
   background-color: #2D81F7;
@@ -52,7 +52,7 @@
   font-size: 15px;
   border-radius: 5px;
 }
-.instruction-page .instruction-page__content .instruction-page__content_details button a {
+.instruction-page .instruction-page__content .instruction-page__content_details .submitBtn button a {
   text-decoration: none;
   color: white;
 }
@@ -68,12 +68,57 @@
      object-fit: cover;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 850px) {
   .instruction-page {
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    height: auto;
+    padding-top: 30px;
     flex-direction: column-reverse;
   }
-  .instruction-page_image {
-    margin-bottom: 30px;
+  .instruction-page .instruction-page__content {
+    padding: 20px;
+  }
+  .instruction-page .instruction-page__content .instruction-page__title {
+    text-align: center;
+    font-size: 150%;
+  }
+  .instruction-page .instruction-page__content .instruction-page__content_details p {
+    font-size: 100%;
+    text-align: center;
+  }
+  .instruction-page .instruction-page__content .instruction-page__content_details ul li {
+    font-size: 90%;
+  }
+  .instruction-page .instruction-page__content .instruction-page__content_details .submitBtn {
+    display: flex;
+    justify-content: center;
+  }
+}
+@media (max-width: 450px) {
+  .instruction-page .instruction-page__content {
+    padding: 10px;
+  }
+  .instruction-page .instruction-page__content .instruction-page__title {
+    text-align: center;
+    font-size: 140%;
+  }
+  .instruction-page .instruction-page__content .instruction-page__content_details p {
+    font-size: 100%;
+    text-align: center;
+  }
+  .instruction-page .instruction-page__content .instruction-page__content_details ul li {
+    padding: 5px;
+    line-height: 2;
+    font-size: 85%;
+  }
+  .instruction-page .instruction-page__content .instruction-page__content_details .submitBtn {
+    display: flex;
+    justify-content: center;
+  }
+  .instruction-page .instruction-page__content .instruction-page__content_details .submitBtn button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 90%;
   }
 }/*# sourceMappingURL=testInstruction.css.map */

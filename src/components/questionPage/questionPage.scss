@@ -1,6 +1,7 @@
 @use "../variables" as *;
 
 .question-page{
+    text-align: left;
     display: flex;
     flex-direction: column;
     .question-page__title{
@@ -24,6 +25,7 @@
                     padding: 20px;
                     
                     input[type="radio"]{
+                        font-size: 20px;
                         // border: 1px solid $button-color;
                         background-color: $button-color;
                     }

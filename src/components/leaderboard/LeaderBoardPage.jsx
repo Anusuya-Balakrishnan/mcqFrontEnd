@@ -20,7 +20,6 @@ function LeaderBoardPage() {
           }
         );
 
-        console.log("Hello", response?.data?.message);
         setResultData(response?.data?.message);
       } catch (error) {
         console.log("Error:", error);
@@ -61,39 +60,27 @@ function LeaderBoardPage() {
                     <React.Fragment key={index}>
                       <div className="leaderboard_item2 currentUser">
                         <div>{index + 1}</div>
-                        <div>{item.username} (Current Student)</div>
+                        <div>
+                          {item.username[0].toUpperCase() +
+                            item.username.slice(1)}{" "}
+                          (Current Student)
+                        </div>
                         <div>{item.result}</div>
                       </div>
                     </React.Fragment>
                   ))
                 : ""}
 
-              {/* {resultData ? (
-                resultData.map((item, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <div className="leaderboard_item2 currentUser">
-                        {item.currentUser && (
-                          <>
-                            <div>{index + 1}</div>
-                            <div>{item.username}</div>
-                            <div>{item.result}</div>
-                          </>
-                        )}
-                      </div>
-                    </React.Fragment>
-                  );
-                })
-              ) : (
-                <div>No data available</div>
-              )} */}
               {resultData ? (
                 resultData.map((item, index) => {
                   return (
                     <React.Fragment key={index}>
                       <div className="leaderboard_item2">
                         <div>{index + 1}</div>
-                        <div>{item.username}</div>
+                        <div>
+                          {item.username[0].toUpperCase() +
+                            item.username.slice(1)}
+                        </div>
                         <div>{item.result}</div>
                       </div>
                     </React.Fragment>

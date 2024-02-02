@@ -126,7 +126,7 @@ export function QuestionPage() {
             <div className="question-page__body">
               <div className="question-page-content">
                 <form id="questionForm">
-                  <span className="questionNumber"> {count + 1} </span>
+                  <span className="questionNumber"> {count + 1} .</span>
                   <span className="question-page-content__questions">
                     {currentQuestion["question"] || ""}
                   </span>
@@ -215,7 +215,7 @@ export function QuestionPage() {
                   </button>
                 </form>
               </div>
-              <div className="question-page__question-list">
+              {/* <div className="question-page__question-list">
                 <div className="question-page__each-question__time">
                   <p>Time</p>
                   <div className="exact-time">00 mins:58 sec</div>
@@ -238,7 +238,7 @@ export function QuestionPage() {
                     <p>Not Answered</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </section>
         </section>
