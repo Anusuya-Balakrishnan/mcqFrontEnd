@@ -38,12 +38,11 @@ export function TopList() {
   }, []);
 
   useEffect(() => {
-    console.log("data", data);
     const array = [];
     for (let eachData of data) {
       array.push(eachData);
     }
-    console.log(array);
+
     setlanguageList(array);
   }, [data]);
 

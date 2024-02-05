@@ -23,9 +23,7 @@ function PasswordPage() {
     setShowPassword(!showPassword);
   };
 
-  useEffect(() => {
-    console.log("registerId", registerId);
-  }, []);
+  useEffect(() => {}, []);
   const navigateSignup = () => {
     navigate("/signup");
   };

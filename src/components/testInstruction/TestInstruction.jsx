@@ -17,7 +17,8 @@ export function TestInstruction() {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [totalMark, setTotalMark] = useState(0);
-  const { questions, setQuestions } = useContext(Context);
+  const { questions, setQuestions, isUserActive, setIsUserActive } =
+    useContext(Context);
   const [questionsOnly, setQuestionsOnly] = useState({});
   const [level, setLevel] = useState("");
 
@@ -72,6 +73,15 @@ export function TestInstruction() {
     });
   }, [responseData]);
 
+  const createSession = () => {
+    const storedValue = JSON.parse(sessionStorage.getItem("isUserActive"));
+
+    const isUserActiveValue = storedValue ? JSON.parse(storedValue) : false;
+    if (!isUserActiveValue) {
+      sessionStorage.setItem("isUserActive", JSON.stringify(true));
+      setIsUserActive(true);
+    }
+  };
   return (
     <>
       {localStorage.getItem("token") ? (
@@ -114,7 +124,7 @@ export function TestInstruction() {
                   </ul>
                   <p>Good Luck &#128512;</p>
                   <div className="submitBtn">
-                    <button>
+                    <button onClick={createSession}>
                       <Link to={`/testPage/${topicNameData}`}>Start Quiz</Link>
                     </button>
                   </div>

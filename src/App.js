@@ -16,13 +16,16 @@ import { MyContextProvider } from "./components/MyContext.jsx";
 import Context from "./components/Context.jsx";
 import LeaderBoardPage from "./components/leaderboard/LeaderBoardPage.jsx";
 import PasswordPage from "./components/password/PasswordPage.jsx";
+import { NavbarForQuiz } from "./components/navbar/NavbarForQuiz.jsx";
 
 function App() {
   const contextValue = useContext(Context);
   const [registerId, setRegisterId] = useState("");
   const [questions, setQuestions] = useState({});
   const [question_id, setQuestion_id] = useState({});
-
+  const [isUserActive, setIsUserActive] = useState();
+  const [newUserToQuiz, setNewUserToQuiz] = useState(false);
+  const [resultContent, setResultContent] = useState({});
   return (
     <div className="App">
       <BrowserRouter>
@@ -34,6 +37,12 @@ function App() {
             setQuestion_id,
             registerId,
             setRegisterId,
+            isUserActive,
+            setIsUserActive,
+            resultContent,
+            setResultContent,
+            newUserToQuiz,
+            setNewUserToQuiz,
           }}
         >
           <Routes>
@@ -50,6 +59,7 @@ function App() {
             <Route path="/testPage/:topicName" element={<QuestionPage />} />
             <Route path="/resultPage" element={<ResultPage />} />
             <Route path="/leaderBoardPage" element={<LeaderBoardPage />} />
+            <Route path="/quiz" element={<NavbarForQuiz />} />
           </Routes>
         </Context.Provider>
       </BrowserRouter>

@@ -7,89 +7,102 @@
 }
 
 .question-page {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  min-height: 89.2vh;
+  height: auto;
+  background-color: rgb(240, 242, 246);
+  padding-top: 80px;
 }
 .question-page .question-page__title {
-  text-align: center;
-  color: #2D81F7;
-  font-size: 22px;
-  margin: 30px;
+  text-align: left;
+  color: #072c50;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 20px;
+}
+.question-page .question-page__title .Question_time span {
+  position: relative;
+  top: 3px;
+  color: green;
+  margin-right: 2px;
 }
 .question-page .question-page__body {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  margin-top: 30px;
 }
 .question-page .question-page__body .question-page-content {
-  margin: 30px;
-  padding: 30px 70px;
+  margin: 30px auto 0;
+}
+.question-page .question-page__body .question-page-content .question-page-content__questions {
+  font-size: 18px;
 }
 .question-page .question-page__body .question-page-content .question-page-content__optionParent {
-  margin: 50px 30px;
+  margin: 50px;
 }
 .question-page .question-page__body .question-page-content .question-page-content__optionParent .question-page-content__options {
+  min-width: 400px;
+  width: auto;
   padding: 20px;
+  margin: 20px;
+  color: #072c50;
+  border: 1px solid #072c50;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.question-page .question-page__body .question-page-content .question-page-content__optionParent .question-page-content__options input[type=radio] {
-  font-size: 20px;
-  background-color: #2D81F7;
+.question-page .question-page__body .question-page-content .question-page-content__optionParent .question-page-content__options div {
+  text-align: left;
 }
-.question-page .question-page__body .question-page-content .question-page-content__optionParent .question-page-content__options p {
-  display: inline-block;
-  padding-left: 20px;
+.question-page .question-page__body .question-page-content .question-page-content__optionParent .question-page-content__options:hover {
+  background-color: rgb(126, 126, 126);
 }
 .question-page .question-page__body .question-page-content .question-page-content__submit {
-  padding: 10px 30px;
+  margin-top: 20px;
+  padding: 10px 40px;
   border: 0;
   background-color: #2D81F7;
   border-radius: 5px;
   font-size: 18px;
   color: white;
 }
-.question-page .question-page__body .question-page__question-list {
-  padding: 30px;
-  width: 400px;
-  border-radius: 10px;
-  background-color: #dbdbdb;
+
+@media (max-width: 700px) {
+  .question-page .question-page__title {
+    font-size: 110%;
+  }
+  .question-page .question-page__body .question-page-content .question-page-content__questions {
+    font-size: 110%;
+  }
+  .question-page .question-page__body .question-page-content .question-page-content__optionParent {
+    margin: 10px;
+  }
+  .question-page .question-page__body .question-page-content .question-page-content__optionParent .question-page-content__options {
+    background-color: red;
+    width: 80%;
+  }
 }
-.question-page .question-page__body .question-page__question-list .question-page__each-question__time .exact-time {
-  margin: 20px;
-}
-.question-page .question-page__body .question-page__question-list .question-page__each-questionNo-parent .question-page__each-question__no {
-  margin: 20px 0;
-  display: flex;
-  flex-wrap: wrap;
-}
-.question-page .question-page__body .question-page__question-list .question-page__each-questionNo-parent .question-page__each-question__no .button {
-  width: 50px;
-  height: 50px;
-  margin: 12px;
-  border: 0;
-  transition: 0.3s;
-  background-color: white;
-  cursor: pointer;
-}
-.question-page .question-page__body .question-page__question-list .question-page__each-questionNo-parent .question-page__each-question__no .button:hover {
-  transform: scale(1.1);
-}
-.question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction1, .question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction3, .question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction2 {
-  display: flex;
-  margin: 20px;
-}
-.question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction1 button, .question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction3 button, .question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction2 button {
-  width: 50px;
-  height: 50px;
-  margin-right: 20px;
-  border: 0;
-  background-color: #4ACD08;
-}
-.question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction1 p, .question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction3 p, .question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction2 p {
-  padding: 20px;
-}
-.question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction2 button {
-  background-color: #FFFFFF;
-}
-.question-page .question-page__body .question-page__question-list .question-page__instruction .question-page__instruction3 button {
-  background-color: #2D81F7;
+@media (max-width: 450px) {
+  .question-page .question-page__title {
+    font-size: 90%;
+  }
+  .question-page .question-page__body .question-page-content .question-page-content__questions {
+    font-size: 90%;
+  }
+  .question-page .question-page__body .question-page-content .question-page-content__optionParent {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .question-page .question-page__body .question-page-content .question-page-content__optionParent .question-page-content__options {
+    height: auto;
+    margin: 10px 5px;
+    min-width: 50px;
+    font-size: 90%;
+  }
+  .question-page .question-page__body .question-page-content .question-page-content__submit {
+    padding: 10px 30px;
+  }
 }/*# sourceMappingURL=questionPage.css.map */

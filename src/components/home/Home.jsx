@@ -24,7 +24,6 @@ export function Home() {
         );
 
         setData(response?.data?.mcqList);
-        console.log(localStorage.getItem("token"));
       } catch (error) {
         console.log("Error:", error);
       }
@@ -34,17 +33,13 @@ export function Home() {
   }, []);
 
   useEffect(() => {
-    // console.log("data", data);
     const array = [];
     for (let eachData of data) {
       array.push(eachData);
     }
-    // console.log(array);
+
     setMcqList(array);
   }, [data]);
-  useEffect(() => {
-    console.log(mcqList);
-  }, [mcqList]);
 
   const userNavigate = (id) => {
     navigate(`/topList/${id}`);
@@ -74,10 +69,11 @@ export function Home() {
                     className="MCQ-list__Each-test"
                     key={index}
                     onClick={() =>
-                      item.mcqName === "Programming" && userNavigate(item.id)
+                      item.mcqName === "programming" && userNavigate(item.id)
                     }
                   >
-                    {item.mcqName} Quizzes
+                    {item.mcqName[0].toUpperCase() + item.mcqName.slice(1)}{" "}
+                    Quizzes
                   </div>
                   <p
                     style={{

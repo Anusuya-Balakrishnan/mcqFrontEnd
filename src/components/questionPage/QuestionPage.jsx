@@ -4,17 +4,29 @@ import Context from "../Context";
 import Login from "../login/Login";
 import { Navbar } from "../navbar/Navbar";
 import questionPage from "./questionPage.css";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { RiTimerLine } from "react-icons/ri";
+import { ResultPage } from "../resultPage/ResultPage";
+import { NavbarForQuiz } from "../navbar/NavbarForQuiz";
+
 export function QuestionPage() {
   // data from test instruction page
-  const { questions, setQuestions, question_id, setQuestion_id } =
-    useContext(Context);
-
+  const {
+    questions,
+    setQuestions,
+    question_id,
+    setQuestion_id,
+    isUserActive,
+    setIsUserActive,
+    resultContent,
+    setResultContent,
+    newUserToQuiz,
+    setNewUserToQuiz,
+  } = useContext(Context);
   const navigate = useNavigate();
   let { topicName } = useParams();
-
   const [actualQuestions, setActualQuestions] = useState({});
   const [id_list, setId_list] = useState([]);
   const [count, setCount] = useState(0);
@@ -26,25 +38,43 @@ export function QuestionPage() {
   const [languageIdData, setLanguageIdData] = useState(questions["languageId"]);
   const [level, setLevel] = useState(questions["level"]);
   const [resultObject, setResultObject] = useState({});
+  const [isSelected, setSelected] = useState(0);
+  const [seconds, setSeconds] = useState(40);
 
   useEffect(() => {
-    setActualQuestions(questions.key);
-    setId_list(Object.keys(questions.key));
+    const timer = setInterval(() => {
+      setSeconds((prevSeconds) => prevSeconds - 1);
+    }, 1000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(timer);
+  }, []);
+
+  // Update minutes and hours when seconds reach 60
+  useEffect(() => {
+    if (seconds === 0) {
+      changeQuestionNumber();
+    }
+  }, [seconds]);
+
+  useEffect(() => {
+    setActualQuestions(questions.key || {});
+    setId_list(Object.keys(questions.key || {}));
   }, [questions.key]);
 
   useEffect(() => {
-    if (id_list.length > 0) {
+    if (id_list.length > 0 && actualQuestions[id_list[count]]) {
       setcurrentQuestion(actualQuestions[id_list[count]]);
     }
   }, [id_list, count]);
 
-  useEffect(() => {}, [id_list]);
   function changeQuestionNumber() {
     // Move to the next question
+    setSeconds(40);
+    setSelected(0);
+
     if (count < id_list.length - 1) {
       setCount((prevIndex) => prevIndex + 1);
-      // Clear the selected answer when moving to the next question
-      setCurrentAnswer((preValue) => null);
 
       setcurrentQuestion((prevQuestions) => actualQuestions[id_list[count]]);
     } else {
@@ -56,11 +86,6 @@ export function QuestionPage() {
         level: level,
       }));
     }
-    // Uncheck all radio buttons by resetting the state
-    const radioButtons = document.getElementsByName("option");
-    radioButtons.forEach((button) => {
-      button.checked = false;
-    });
   }
 
   useEffect(() => {
@@ -69,19 +94,26 @@ export function QuestionPage() {
   }, [currentQuestion]);
 
   function handleAnswer(data) {
-    setCurrentAnswer(() => data);
-    // Check if the selected answer is correct
-    const isCorrect = data === correctAnswer;
-
-    // Add the result value for the current question
-    setResultList((resultList) => ({
-      ...resultList,
-      [id_list[count]]: {
-        selectedAnswer: data,
-        isCorrect: isCorrect,
-      },
-    }));
+    if (data) {
+      setCurrentAnswer(data);
+    }
   }
+  useEffect(() => {
+    // Check if the selected answer is correct
+    const isCorrect = currentAnswer === correctAnswer;
+
+    // Make sure id_list[count] is defined before updating resultList
+    if (id_list[count]) {
+      // Add the result value for the current question
+      setResultList((prevResultList) => ({
+        ...prevResultList,
+        [id_list[count]]: {
+          selectedAnswer: currentAnswer,
+          isCorrect: isCorrect,
+        },
+      }));
+    }
+  }, [currentAnswer]);
 
   const postResultData = async () => {
     try {
@@ -97,6 +129,14 @@ export function QuestionPage() {
           },
         }
       );
+
+      setNewUserToQuiz(response?.data?.message);
+
+      setResultContent(response?.data?.data);
+
+      setQuestion_id(id_list);
+      sessionStorage.removeItem("isUserActive");
+      navigate("/resultPage");
     } catch (error) {
       console.log("Error:", error);
     }
@@ -110,138 +150,79 @@ export function QuestionPage() {
       resultObject.languageId &&
       resultObject.level
     ) {
+      console.log("resultObject", resultObject);
       postResultData();
-      setQuestion_id(id_list);
-      navigate("/resultPage");
     }
-  }, [resultObject]); // The effect will run whenever resultObject changes
+  }, [resultObject, resultList, topicIdData, languageIdData, level]); // The effect will run whenever resultObject changes
+
+  useEffect(() => {}, [currentAnswer]);
 
   return (
     <>
       {localStorage.getItem("token") ? (
-        <section>
-          <Navbar />
-          <section className="question-page">
-            <div className="question-page__title">{topicName}</div>
-            <div className="question-page__body">
-              <div className="question-page-content">
-                <form id="questionForm">
-                  <span className="questionNumber"> {count + 1} .</span>
-                  <span className="question-page-content__questions">
-                    {currentQuestion["question"] || ""}
+        JSON.parse(sessionStorage.getItem("isUserActive")) ? (
+          <section>
+            <NavbarForQuiz />
+            <section className="question-page">
+              <div className="question-page__title">
+                <div>
+                  {topicName}: {count + 1} of {id_list.length} Questions
+                </div>
+                <div className="Question_time">
+                  <span>
+                    <RiTimerLine />
                   </span>
-                  <div className="question-page-content__optionParent">
-                    <div className="question-page-content__options">
-                      <input
-                        type="radio"
-                        name="option"
-                        className="option"
-                        onChange={(e) => handleAnswer(e.target.value)}
-                        value={
-                          currentQuestion["option"]
-                            ? currentQuestion["option"][0]
-                            : ""
-                        }
-                      />
-                      <p>
-                        {currentQuestion["option"]
-                          ? currentQuestion["option"][0]
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="question-page-content__options">
-                      <input
-                        type="radio"
-                        name="option"
-                        className="option"
-                        onChange={(e) => handleAnswer(e.target.value)}
-                        value={
-                          currentQuestion["option"]
-                            ? currentQuestion["option"][1]
-                            : ""
-                        }
-                      />
-                      <p>
-                        {currentQuestion["option"]
-                          ? currentQuestion["option"][1]
-                          : ""}
-                      </p>
-                    </div>
-
-                    <div className="question-page-content__options">
-                      <input
-                        type="radio"
-                        name="option"
-                        className="option"
-                        onChange={(e) => handleAnswer(e.target.value)}
-                        value={
-                          currentQuestion["option"]
-                            ? currentQuestion["option"][2]
-                            : ""
-                        }
-                      />
-                      <p>
-                        {currentQuestion["option"]
-                          ? currentQuestion["option"][2]
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="question-page-content__options">
-                      <input
-                        type="radio"
-                        name="option"
-                        className="option"
-                        onChange={(e) => handleAnswer(e.target.value)}
-                        value={
-                          currentQuestion["option"]
-                            ? currentQuestion["option"][3]
-                            : ""
-                        }
-                      />
-                      <p>
-                        {currentQuestion["option"]
-                          ? currentQuestion["option"][3]
-                          : ""}
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="question-page-content__submit"
-                    name="submit"
-                  >
-                    <div onClick={changeQuestionNumber}> next </div>
-                  </button>
-                </form>
+                  {seconds} sec
+                </div>
               </div>
-              {/* <div className="question-page__question-list">
-                <div className="question-page__each-question__time">
-                  <p>Time</p>
-                  <div className="exact-time">00 mins:58 sec</div>
+              <div className="question-page__body">
+                <div className="question-page-content">
+                  <form id="questionForm">
+                    <span className="question-page-content__questions">
+                      {currentQuestion["question"] || ""}
+                    </span>
+                    <div className="question-page-content__optionParent">
+                      {currentQuestion["option"]
+                        ? currentQuestion["option"].map((item, index) => (
+                            <div
+                              key={index}
+                              className="question-page-content__options"
+                              onClick={() => setSelected(index + 1)}
+                              style={{
+                                backgroundColor:
+                                  isSelected == index + 1 ? "#072c50" : "white",
+                                color:
+                                  isSelected == index + 1 ? "white" : "#072c50",
+                              }}
+                            >
+                              <div
+                                key={index}
+                                onClick={() => {
+                                  handleAnswer(item);
+                                }}
+                              >
+                                {item}
+                              </div>
+                            </div>
+                          ))
+                        : ""}
+                    </div>
+
+                    <button
+                      type="button"
+                      className="question-page-content__submit"
+                      name="submit"
+                    >
+                      <div onClick={changeQuestionNumber}> next </div>
+                    </button>
+                  </form>
                 </div>
-                <div className="question-page__each-questionNo-parent">
-                  <p>Question Palatte:</p>
-                  <div className="question-page__each-question__no"></div>
-                </div>
-                <div className="question-page__instruction">
-                  <div className="question-page__instruction1">
-                    <button></button>
-                    <p>Answered</p>
-                  </div>
-                  <div className="question-page__instruction2">
-                    <button></button>
-                    <p>Not Visited</p>
-                  </div>
-                  <div className="question-page__instruction3">
-                    <button></button>
-                    <p>Not Answered</p>
-                  </div>
-                </div>
-              </div> */}
-            </div>
+              </div>
+            </section>
           </section>
-        </section>
+        ) : (
+          <ResultPage />
+        )
       ) : (
         <Login />
       )}
