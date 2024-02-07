@@ -66,6 +66,9 @@
   font-size: 18px;
   color: white;
 }
+.question-page .question-page__body .question-page-content .question-page-content__submit:hover {
+  background-color: green;
+}
 
 @media (max-width: 700px) {
   .question-page .question-page__title {

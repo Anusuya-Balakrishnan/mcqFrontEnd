@@ -39,23 +39,6 @@ export function QuestionPage() {
   const [level, setLevel] = useState(questions["level"]);
   const [resultObject, setResultObject] = useState({});
   const [isSelected, setSelected] = useState(0);
-  const [seconds, setSeconds] = useState(40);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setSeconds((prevSeconds) => prevSeconds - 1);
-    }, 1000);
-
-    // Clean up the interval when the component unmounts
-    return () => clearInterval(timer);
-  }, []);
-
-  // Update minutes and hours when seconds reach 60
-  useEffect(() => {
-    if (seconds === 0) {
-      changeQuestionNumber();
-    }
-  }, [seconds]);
 
   useEffect(() => {
     setActualQuestions(questions.key || {});
@@ -70,13 +53,11 @@ export function QuestionPage() {
 
   function changeQuestionNumber() {
     // Move to the next question
-    setSeconds(40);
-    setSelected(0);
-
-    if (count < id_list.length - 1) {
+    if (count < id_list.length - 1 && isSelected === 0) {
+      window.confirm("Please select any one option");
+    } else if (count < id_list.length - 1) {
+      setSelected(0);
       setCount((prevIndex) => prevIndex + 1);
-
-      setcurrentQuestion((prevQuestions) => actualQuestions[id_list[count]]);
     } else {
       // Add the result value for the current question
       setResultObject((resultObject) => ({
@@ -86,24 +67,33 @@ export function QuestionPage() {
         level: level,
       }));
     }
+    // setTimeout(() => {
+
+    // }, 500);
   }
 
+  useEffect(() => {
+    if (id_list.length > 0 && actualQuestions[id_list[count]]) {
+      setcurrentQuestion(actualQuestions[id_list[count]]);
+    }
+  }, [id_list, count, isSelected]);
   useEffect(() => {
     // Set the correct answer for the next question after state update
     setCorrectAnswer(() => currentQuestion["answer"]);
   }, [currentQuestion]);
 
-  function handleAnswer(data) {
+  function handleAnswer(data, index) {
     if (data) {
       setCurrentAnswer(data);
     }
+    setSelected(index);
   }
   useEffect(() => {
     // Check if the selected answer is correct
     const isCorrect = currentAnswer === correctAnswer;
 
     // Make sure id_list[count] is defined before updating resultList
-    if (id_list[count]) {
+    if (id_list[count] && isSelected !== 0) {
       // Add the result value for the current question
       setResultList((prevResultList) => ({
         ...prevResultList,
@@ -113,8 +103,24 @@ export function QuestionPage() {
         },
       }));
     }
-  }, [currentAnswer]);
+  }, [currentAnswer, isSelected, count]);
 
+  useEffect(() => {
+    console.log("resultList", resultList);
+  }, [resultList]);
+
+  // useEffect(() => {
+  //   if (isUserActive === false) {
+  //     // Add the result value for the current question
+  //     setResultObject((resultObject) => ({
+  //       resultList: resultList,
+  //       topicId: topicIdData,
+  //       languageId: languageIdData,
+  //       level: level,
+  //     }));
+  //     postResultData();
+  //   }
+  // }, [isUserActive]);
   const postResultData = async () => {
     try {
       const response = await axios.post(
@@ -135,7 +141,9 @@ export function QuestionPage() {
       setResultContent(response?.data?.data);
 
       setQuestion_id(id_list);
-      sessionStorage.removeItem("isUserActive");
+      if (isUserActive) {
+        sessionStorage.removeItem("isUserActive");
+      }
       navigate("/resultPage");
     } catch (error) {
       console.log("Error:", error);
@@ -155,8 +163,6 @@ export function QuestionPage() {
     }
   }, [resultObject, resultList, topicIdData, languageIdData, level]); // The effect will run whenever resultObject changes
 
-  useEffect(() => {}, [currentAnswer]);
-
   return (
     <>
       {localStorage.getItem("token") ? (
@@ -168,12 +174,12 @@ export function QuestionPage() {
                 <div>
                   {topicName}: {count + 1} of {id_list.length} Questions
                 </div>
-                <div className="Question_time">
+                {/* <div className="Question_time">
                   <span>
                     <RiTimerLine />
                   </span>
                   {seconds} sec
-                </div>
+                </div> */}
               </div>
               <div className="question-page__body">
                 <div className="question-page-content">
@@ -187,7 +193,9 @@ export function QuestionPage() {
                             <div
                               key={index}
                               className="question-page-content__options"
-                              onClick={() => setSelected(index + 1)}
+                              onClick={() => {
+                                handleAnswer(item, index + 1);
+                              }}
                               style={{
                                 backgroundColor:
                                   isSelected == index + 1 ? "#072c50" : "white",
@@ -195,14 +203,7 @@ export function QuestionPage() {
                                   isSelected == index + 1 ? "white" : "#072c50",
                               }}
                             >
-                              <div
-                                key={index}
-                                onClick={() => {
-                                  handleAnswer(item);
-                                }}
-                              >
-                                {item}
-                              </div>
+                              <div key={index}>{item}</div>
                             </div>
                           ))
                         : ""}
