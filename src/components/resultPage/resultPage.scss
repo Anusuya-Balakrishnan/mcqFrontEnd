@@ -132,6 +132,7 @@
     border-radius: 50%;
     background-color: #2190F5;
     color:white;
+    font-size: 25px;
     @include flexContent();
     &:hover{
         // box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
@@ -170,7 +171,96 @@
         }
     }
 }
+@media (max-width:1100px){
+    .resultPage{
+        // padding-top: 80px;
+        // padding:30px;
+        .result__title{
+            padding-left:0;
+            text-align: center;
+            // width: 100%;
+            margin:10px;
+            // margin-bottom: 50px;
+            
+        }
+        .resultPage__body{
+            margin-top: 30px;
+            flex-direction: column;
+            .resultPage__body_list{
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            
+            .resultPage__body_image{
+                margin-left: 0;
+                
+              
+            }
+        }
+    }
+}
 
+@media (max-width:600px){
+    .resultPage{
+        // padding-top: 80px;
+        // padding:30px;
+        .result__title{
+            font-size: 140%;
+            div{
+                font-size: 80%;
+            }            
+        }
+        .resultPage__body{
+           
+            .resultPage__body_list{
+                p{
+                    font-size: 110%;
+                }
+                ul{
+                    li{
+                        font-size: 95%;
+                    }
+                    span{
+                        font-size: 100%;
+                    }
+                }
+            }
+            
+            
+        }
+    }
+}
+
+@media (max-width:400px){
+    .resultPage{
+        // padding-top: 80px;
+        // padding:30px;
+        .result__title{
+            font-size: 120%;
+            div{
+                font-size: 70%;
+            }            
+        }
+        .resultPage__body{
+           
+            .resultPage__body_list{
+                p{
+                    font-size: 100%;
+                }
+                ul{
+                    li{
+                        font-size: 90%;
+                        span{
+                            font-size: 100%;
+                        }
+                    }
+                }
+            }
+            
+            
+        }
+    }
+}
 // .resultPage__body_image{
 //     width: 300px;
 //     height: 300px;

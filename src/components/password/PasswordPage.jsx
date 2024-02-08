@@ -75,34 +75,41 @@ function PasswordPage() {
               <div className="home-page__signin-box">
                 <form onSubmit={result}>
                   <div className="home-page__sigin-box-title">SIGN IN</div>
-
-                  <div className="passwordBox">
-                    <input
-                      // type="password"
-                      type={showPassword ? "text" : "password"}
-                      ref={passwordRef}
-                      onChange={(e) => {
-                        setPassword(e.target.value.toUpperCase());
-                      }}
-                      placeholder="Enter Password"
-                      name="password"
-                      value={password}
-                      autoComplete="OFF"
-                      required
-                    />
-                    <button type="button" onClick={handleTogglePassword}>
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </button>
-                    <br />
-                    <p
+                  <div className="home-page__sigin-box-middleBox">
+                    <div className="passwordBox">
+                      <input
+                        className="passwordInput"
+                        // type="password"
+                        type={showPassword ? "text" : "password"}
+                        ref={passwordRef}
+                        onChange={(e) => {
+                          setPassword(e.target.value.toUpperCase());
+                        }}
+                        placeholder="Enter Password"
+                        name="password"
+                        value={password}
+                        autoComplete="OFF"
+                        required
+                      />
+                      <div
+                        className="showPassword"
+                        onClick={handleTogglePassword}
+                      >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                      </div>
+                      <br />
+                    </div>
+                    <div
+                      className="errorMessage"
                       style={{
                         color: "red",
                         display: erMessage ? "block" : "none",
                       }}
                     >
                       InCorrect Password
-                    </p>
+                    </div>
                   </div>
+
                   <div className="sigin-box__button">
                     <button className="button">Sign in</button>
                   </div>

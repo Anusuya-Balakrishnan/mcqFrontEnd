@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import signup from "./signup.css";
 import profileImage from "./image/personprofile.svg";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { Home } from "../home/Home";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import signup from "./signup.css";
+
 export function Signup() {
   const [userName, setUserName] = useState("");
   const [oceanRegisterNo, setOceanRegisterNo] = useState("");
@@ -14,6 +18,7 @@ export function Signup() {
   const [success, setSuccess] = useState(false);
   const [token, setToken] = useState("");
   const userRef = useRef(null);
+
   useEffect(() => {
     var retrievedToken = localStorage.getItem("token");
     // localStorage.removeItem("token");
@@ -32,29 +37,88 @@ export function Signup() {
 
   const addUser = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/mcq/users/", {
-        studentName: userName,
-        mobileNumber: mobileNumber,
-        oceanRegisterNo: oceanRegisterNo,
-        email: email,
-        password: password,
-      });
-      setToken(response.data.token);
-      setSuccess(true);
-      setUserName("");
-      setOceanRegisterNo("");
-      setMobileNumber("");
-      setEmail("");
-      setConfirmPassword("");
-      setPassword("");
+    if (checkData()) {
+      try {
+        const response = await axios.post("http://127.0.0.1:8000/mcq/users/", {
+          studentName: userName,
+          mobileNumber: mobileNumber,
+          oceanRegisterNo: oceanRegisterNo,
+          email: email,
+          password: password,
+        });
+        setToken(response.data.token);
+        setSuccess(true);
+        setUserName("");
+        setOceanRegisterNo("");
+        setMobileNumber("");
+        setEmail("");
+        setConfirmPassword("");
+        setPassword("");
 
-      localStorage.setItem("token", response?.data?.token);
-      localStorage.setItem("username", response?.data?.user?.studentName);
-    } catch (error) {
-      console.log("error", error);
+        localStorage.setItem("token", response?.data?.token);
+        localStorage.setItem("username", response?.data?.user?.studentName);
+      } catch (error) {
+        console.log("error", error);
+      }
     }
   };
+  const checkData = () => {
+    if (oceanRegisterNo) {
+      if (!/OCNST\d{5}/.test(oceanRegisterNo)) {
+        toast.info("enter valid ocean register number");
+        return false;
+      }
+    } else {
+      toast.info("Fill Ocean Register Number");
+      return false;
+    }
+    if (userName) {
+      if (!/^[a-zA-Z0-9_]{3,20}$/.test(userName)) {
+        toast.info("enter valid User Name");
+        return false;
+      }
+    } else {
+      toast.info("Fill username field");
+      return false;
+    }
+    if (mobileNumber) {
+      if (!/^\d{10}$/.test(mobileNumber)) {
+        toast.info("Enter valid mobile Number");
+        return false;
+      }
+    } else {
+      toast.info("Fill mobile Number field");
+      return false;
+    }
+    if (email) {
+      if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+        toast.info("Enter valid email");
+        return false;
+      }
+    } else {
+      toast.info("Fill email field");
+      return false;
+    }
+    if (password) {
+      if (!/^.{5,10}$/.test(password)) {
+        toast.info("Enter a valid password with 5 to 10 characters.");
+        return false;
+      }
+    } else {
+      toast.info("Fill password field");
+      return false;
+    }
+    if (password !== confirmPassword) {
+      toast.info(
+        "Enter same characters in password and confirm password field"
+      );
+      return false;
+    } else {
+      toast.success("successfully registered");
+    }
+    return true;
+  };
+
   return (
     <>
       {success || Boolean(token) ? (
@@ -78,7 +142,6 @@ export function Signup() {
                       setOceanRegisterNo(e.target.value.toUpperCase());
                     }}
                     value={oceanRegisterNo}
-                    required
                   />
                   <br />
                   <input
@@ -89,7 +152,6 @@ export function Signup() {
                       setUserName(e.target.value);
                     }}
                     value={userName}
-                    required
                   />
                   <br />
 
@@ -98,11 +160,11 @@ export function Signup() {
                     className="signup-Input"
                     placeholder="Enter your Mobile Number"
                     name="mobileNumber"
+                    autoComplete="off"
                     onChange={(e) => {
                       setMobileNumber(e.target.value);
                     }}
                     value={mobileNumber}
-                    required
                   />
                   <br />
                   <input
@@ -113,7 +175,6 @@ export function Signup() {
                       setEmail(e.target.value);
                     }}
                     name={email}
-                    required
                   />
                   <br />
                   <input
@@ -124,8 +185,8 @@ export function Signup() {
                       setPassword(e.target.value);
                     }}
                     name={password}
-                    required
                   />
+
                   <br />
                   <input
                     className="signup-Input"
@@ -135,14 +196,27 @@ export function Signup() {
                       setConfirmPassword(e.target.value);
                     }}
                     name={confirmPassword}
-                    required
                   />
+
                   <br />
                 </div>
               </div>
               <div className="sign-up__button">
                 <button className="btn">Sign Up</button>
               </div>
+              <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover
+                theme="dark"
+                transition={Bounce} // Corrected syntax
+              />
             </form>
           </div>
         </section>

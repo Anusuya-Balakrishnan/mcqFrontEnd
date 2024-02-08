@@ -73,6 +73,10 @@ input:focus{
     background-color: white;
     outline:1.5px solid $button-color;
 }
+input:-webkit-autofill {
+    background-color: white !important;
+    color: $form-text-color !important;
+}
 @media(max-width:1000px){
     // #CreateAccount{
     //     height: auto;

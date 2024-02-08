@@ -3,6 +3,8 @@ import React, { useEffect, useContext, useState } from "react";
 import Context from "../Context";
 import Login from "../login/Login";
 import { Navbar } from "../navbar/Navbar";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import questionPage from "./questionPage.css";
 import { json, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +56,7 @@ export function QuestionPage() {
   function changeQuestionNumber() {
     // Move to the next question
     if (count < id_list.length - 1 && isSelected === 0) {
-      window.confirm("Please select any one option");
+      toast.info("Please select any one option");
     } else if (count < id_list.length - 1) {
       setSelected(0);
       setCount((prevIndex) => prevIndex + 1);
@@ -67,9 +69,6 @@ export function QuestionPage() {
         level: level,
       }));
     }
-    // setTimeout(() => {
-
-    // }, 500);
   }
 
   useEffect(() => {
@@ -106,21 +105,17 @@ export function QuestionPage() {
   }, [currentAnswer, isSelected, count]);
 
   useEffect(() => {
-    console.log("resultList", resultList);
-  }, [resultList]);
+    if (isUserActive === false) {
+      // Add the result value for the current question
 
-  // useEffect(() => {
-  //   if (isUserActive === false) {
-  //     // Add the result value for the current question
-  //     setResultObject((resultObject) => ({
-  //       resultList: resultList,
-  //       topicId: topicIdData,
-  //       languageId: languageIdData,
-  //       level: level,
-  //     }));
-  //     postResultData();
-  //   }
-  // }, [isUserActive]);
+      setResultObject((resultObject) => ({
+        resultList: resultList,
+        topicId: topicIdData,
+        languageId: languageIdData,
+        level: level,
+      }));
+    }
+  }, [isUserActive]);
   const postResultData = async () => {
     try {
       const response = await axios.post(
@@ -158,7 +153,6 @@ export function QuestionPage() {
       resultObject.languageId &&
       resultObject.level
     ) {
-      console.log("resultObject", resultObject);
       postResultData();
     }
   }, [resultObject, resultList, topicIdData, languageIdData, level]); // The effect will run whenever resultObject changes
@@ -216,6 +210,19 @@ export function QuestionPage() {
                     >
                       <div onClick={changeQuestionNumber}> next </div>
                     </button>
+                    <ToastContainer
+                      position="top-center"
+                      autoClose={5000}
+                      hideProgressBar
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss={false}
+                      draggable
+                      pauseOnHover
+                      theme="dark"
+                      transition={Bounce} // Corrected syntax
+                    />
                   </form>
                 </div>
               </div>

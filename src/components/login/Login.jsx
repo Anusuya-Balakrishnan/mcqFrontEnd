@@ -15,7 +15,8 @@ export default function Login() {
   const userRef = useRef(null);
   const errorRef = useRef(null);
 
-  const [erMessage, setError] = useState("");
+  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigateSignup = () => {
     navigate("/signup");
@@ -42,26 +43,34 @@ export default function Login() {
 
   const result = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/mcq/custom_user_check/",
-        { oceanRegisterNo: user }
-      );
-      if (response?.data?.message) {
-        setRegisterId(user);
-        setError(false);
-        navigate("/passwordPage");
-      } else {
+    if (user) {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/mcq/custom_user_check/",
+          { oceanRegisterNo: user }
+        );
+        if (response?.data?.message) {
+          setRegisterId(user);
+          setError(false);
+          setErrorMessage("");
+          navigate("/passwordPage");
+        } else {
+          setError(true);
+          setErrorMessage("Invalid Register Number");
+        }
+        setUser("");
+        // localStorage.setItem("token", response?.data?.token);
+        // localStorage.setItem("username", response?.data?.user?.studentName);
+        // setToken(response?.data?.token);
+        // setError(false);
+      } catch (error) {
+        setUser("");
         setError(true);
+        setErrorMessage("Invalid Register Number");
       }
-      setUser("");
-      // localStorage.setItem("token", response?.data?.token);
-      // localStorage.setItem("username", response?.data?.user?.studentName);
-      // setToken(response?.data?.token);
-      // setError(false);
-    } catch (error) {
-      setUser("");
+    } else {
       setError(true);
+      setErrorMessage("Enter Register Number");
     }
   };
 
@@ -92,18 +101,18 @@ export default function Login() {
                     name="oceanRegisterNo"
                     value={user}
                     autoComplete="OFF"
-                    required
                   />
                   <br />
-                  <p
+                  <div
+                    className="errorMessage"
                     style={{
                       color: "red",
-                      display: erMessage ? "block" : "none",
+                      display: error ? "block" : "none",
                       paddingBottom: "10px",
                     }}
                   >
-                    Invalid Register No
-                  </p>
+                    {errorMessage}
+                  </div>
                   <div className="signup_box">
                     Don't you have Account?{" "}
                     <span onClick={navigateSignup}>Sign Up</span>

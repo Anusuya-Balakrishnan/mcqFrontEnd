@@ -5,7 +5,8 @@ import Context from "../Context";
 import resultPage from "./resultPage.css";
 import Login from "../login/Login";
 import axios from "axios";
-import { FaAngleDoubleLeft } from "react-icons/fa";
+import { IoArrowBack } from "react-icons/io5";
+
 import { Navbar } from "../navbar/Navbar";
 import { ClipLoader } from "react-spinners";
 
@@ -54,9 +55,20 @@ export function ResultPage() {
   //   }
   // }, [question_id]);
   const [percentage, setPercentage] = useState(0);
+  const [showText, setShowText] = useState(true);
   function backButtonNavigate() {
     navigate("/");
   }
+
+  useEffect(() => {
+    // Set a timeout to hide the text after 10 seconds
+    const timeoutId = setTimeout(() => {
+      setShowText(false);
+    }, 10000); // 10000 milliseconds = 10 seconds
+
+    // Cleanup the timeout on component unmount or if the state changes before 10 seconds
+    return () => clearTimeout(timeoutId);
+  }, []); // Empty dependency array ensures useEffect runs only once
 
   useEffect(() => {
     const handlePopstate = (event) => {
@@ -99,6 +111,16 @@ export function ResultPage() {
   }, []);
 
   const dashArrayValue = (percentage / 100) * 126;
+
+  const greetingMessage = () => {
+    if (percentage >= 70) {
+      return "Great job! You've mastered the quiz!";
+    } else if (percentage >= 50) {
+      return "Good effort! Keep learning and improving.";
+    } else {
+      return "You can do better! Take some time to review and try again.";
+    }
+  };
   return (
     <>
       {localStorage.getItem("token") ? (
@@ -107,11 +129,10 @@ export function ResultPage() {
             <Navbar />
             <section class="resultPage">
               <div class="result__title">
-                Congratulations! You have completed the quiz in the{" "}
-                {resultContent ? resultContent.topicName : ""} category.
-                {!newUserToQuiz && (
+                {greetingMessage()}{" "}
+                {!newUserToQuiz && showText && (
                   <div style={{ color: "red" }}>
-                    You Already Completed this quiz.
+                    You are already completed this quiz.
                   </div>
                 )}
               </div>
@@ -176,7 +197,7 @@ export function ResultPage() {
                 </div>
               </div>
               <div class="back_button" onClick={backButtonNavigate}>
-                <FaAngleDoubleLeft />
+                <IoArrowBack />
               </div>
             </section>
           </>

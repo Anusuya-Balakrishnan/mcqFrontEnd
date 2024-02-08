@@ -57,6 +57,12 @@
 .leaderboardPage .leaderboard_table .currentUser {
   margin-bottom: 2px;
 }
+.leaderboardPage .leaderboard_table .currentUser div img {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  top: 5px;
+}
 
 @media (max-width: 1180px) {
   .leaderboardPage .leaderboardHeading {

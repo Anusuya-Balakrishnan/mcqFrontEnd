@@ -29,7 +29,9 @@
 }
 .MCQ-Navbar .mcq_secondChild .mcq_subchild {
   display: inline-block;
-  margin: 0 40px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 0 30px;
 }
 .MCQ-Navbar .mcq_secondChild .mcq_subchild img {
   width: 20px;
@@ -46,7 +48,7 @@
   margin-right: 20px;
 }
 .MCQ-Navbar .mcq_secondChild .mcq_personProfile span {
-  font-size: 25px;
+  font-size: 22px;
 }
 .MCQ-Navbar .mcq_secondChild .mcq_personProfile span.icon {
   position: relative;
@@ -107,7 +109,7 @@
   display: block;
 }
 
-@media (max-width: 870px) {
+@media (max-width: 1040px) {
   .MCQ-Navbar .mcq_secondChild {
     display: none;
   }

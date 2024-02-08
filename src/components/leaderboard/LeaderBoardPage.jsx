@@ -3,9 +3,11 @@ import leaderboard from "./leaderboard.css";
 import Login from "../login/Login";
 import axios from "axios";
 import { Navbar } from "../navbar/Navbar";
+import winCup from "./image/trophy.png";
 function LeaderBoardPage() {
   const [resultData, setResultData] = useState();
   const [currentUserData, setCurrentUserData] = useState();
+  const [currentUserId, setCurrentUserId] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,6 +35,10 @@ function LeaderBoardPage() {
     setCurrentUserData(
       resultData && resultData.filter((item) => item.currentUser)
     );
+    // Ensure resultData is an array before calling findIndex
+    if (Array.isArray(resultData) && resultData.length > 0) {
+      setCurrentUserId(resultData.findIndex((item) => item.currentUser) + 1);
+    }
 
     // Now currentUserData contains an array with only the current user's data
   }, [resultData]);
@@ -59,11 +65,11 @@ function LeaderBoardPage() {
                 ? currentUserData.map((item, index) => (
                     <React.Fragment key={index}>
                       <div className="leaderboard_item2 currentUser">
-                        <div>{index + 1}</div>
+                        <div>{currentUserId ? currentUserId : ""}</div>
                         <div>
                           {item.username[0].toUpperCase() +
                             item.username.slice(1)}{" "}
-                          (Current Student)
+                          <img src={winCup} alt="medal" />
                         </div>
                         <div>{item.result}</div>
                       </div>

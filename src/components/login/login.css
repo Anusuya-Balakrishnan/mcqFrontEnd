@@ -41,27 +41,53 @@
 .home-page .home-page__signin-box .home-page__sigin-box-middleBox {
   display: flex;
   justify-content: flex-start;
+  align-items: flex-start;
   flex-direction: column;
   text-align: left;
   margin: 40px 0 30px;
   width: 330px;
 }
-.home-page .home-page__signin-box .home-page__sigin-box-middleBox p {
+.home-page .home-page__signin-box .home-page__sigin-box-middleBox .errorMessage {
   margin-left: 3%;
 }
-.home-page .home-page__signin-box .passwordBox {
+.home-page .home-page__signin-box .home-page__sigin-box-middleBox .passwordBox {
   margin: 20px 0;
+  background-color: white;
+  display: flex;
+  border: 1px solid #072c50;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
 }
-.home-page .home-page__signin-box input[type=text] {
+.home-page .home-page__signin-box .home-page__sigin-box-middleBox .passwordBox input[type=password] {
   width: 330px;
   height: 60px;
   border: 0;
   padding: 15px;
-  border-radius: 2px;
+  border-radius: 0;
+  outline: 0;
   margin: 0;
   font-size: 19px;
 }
-.home-page .home-page__signin-box input[type=text]:focus {
+.home-page .home-page__signin-box .home-page__sigin-box-middleBox .passwordBox .showPassword {
+  height: auto;
+  width: auto;
+  font-size: 18px;
+  background-color: white;
+  border: 0;
+  margin-right: 10px;
+}
+.home-page .home-page__signin-box .home-page__sigin-box-middleBox input[type=text] {
+  width: 330px;
+  height: 60px;
+  border: 0;
+  padding: 15px;
+  border-radius: 0;
+  outline: 0;
+  margin: 0;
+  font-size: 19px;
+}
+.home-page .home-page__signin-box .home-page__sigin-box-middleBox .input[type=text]:focus {
   outline: 1px #072c50 solid;
 }
 .home-page .home-page__signin-box .signup_box {
@@ -110,18 +136,31 @@
   .home-page .home-page__signin-box .home-page__sigin-box-title {
     font-size: 150%;
   }
+  .home-page .home-page__signin-box .home-page__sigin-box-middleBox {
+    margin: 20px 0;
+  }
   .home-page .home-page__signin-box .home-page__sigin-box-middleBox input[type=text] {
     width: auto;
     font-size: 90%;
   }
-  .home-page .home-page__signin-box .home-page__sigin-box-middleBox p {
+  .home-page .home-page__signin-box .home-page__sigin-box-middleBox .passwordBox {
+    margin: 15px 0;
+    width: 330px;
+    justify-content: space-between;
+  }
+  .home-page .home-page__signin-box .home-page__sigin-box-middleBox .passwordBox input.passwordInput {
+    width: 85%;
+    height: 60px;
+    font-size: 90%;
+  }
+  .home-page .home-page__signin-box .home-page__sigin-box-middleBox .passwordBox .showPassword {
+    font-size: 80%;
+    margin-right: 5px;
+  }
+  .home-page .home-page__signin-box .home-page__sigin-box-middleBox .errorMessage {
     font-size: 90%;
   }
   .home-page .home-page__signin-box .home-page__sigin-box-middleBox .signup_box {
-    font-size: 90%;
-  }
-  .home-page .home-page__signin-box .passwordBox input[type=password] {
-    width: auto;
     font-size: 90%;
   }
   .home-page .home-page__signin-box .sigin-box__button .button {
@@ -150,14 +189,20 @@
     height: auto;
     font-size: 80%;
   }
-  .home-page .home-page__signin-box .home-page__sigin-box-middleBox p {
+  .home-page .home-page__signin-box .home-page__sigin-box-middleBox .passwordBox {
+    width: auto;
+  }
+  .home-page .home-page__signin-box .home-page__sigin-box-middleBox .passwordBox input.passwordInput {
+    width: 85%;
+  }
+  .home-page .home-page__signin-box .home-page__sigin-box-middleBox .passwordBox .showPassword {
+    font-size: 80%;
+    margin-right: 5px;
+  }
+  .home-page .home-page__signin-box .home-page__sigin-box-middleBox .errorMessage {
     font-size: 80%;
   }
   .home-page .home-page__signin-box .home-page__sigin-box-middleBox .signup_box {
-    font-size: 80%;
-  }
-  .home-page .home-page__signin-box .passwordBox input[type=password] {
-    width: auto;
     font-size: 80%;
   }
   .home-page .home-page__signin-box .sigin-box__button .button {

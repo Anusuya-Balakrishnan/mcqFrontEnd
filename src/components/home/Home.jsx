@@ -78,7 +78,7 @@ export function Home() {
                   <p
                     style={{
                       display:
-                        item.mcqName === "Programming" ? "none" : "block",
+                        item.mcqName === "programming" ? "none" : "block",
                       color: "red",
                     }}
                   >
