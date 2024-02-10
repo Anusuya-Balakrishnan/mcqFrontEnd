@@ -96,7 +96,9 @@ export function ResultPage() {
     const updatePercentage = () => {
       const newPercentage = parseInt(
         (resultContent.correctCount /
-          (resultContent.correctCount + resultContent.wrongCount)) *
+          (resultContent.correctCount +
+            resultContent.wrongCount +
+            resultContent.skippedCount)) *
           100
       ); // Replace this with your actual logic
       setPercentage(newPercentage);
@@ -146,7 +148,8 @@ export function ResultPage() {
                       <span>
                         {resultContent
                           ? resultContent.correctCount +
-                            resultContent.wrongCount
+                            resultContent.wrongCount +
+                            resultContent.skippedCount
                           : ""}
                       </span>
                     </li>
@@ -160,6 +163,12 @@ export function ResultPage() {
                       Number of Wrong Answer :
                       <span>
                         {resultContent ? resultContent.wrongCount : ""}
+                      </span>
+                    </li>
+                    <li>
+                      Number of Skipped Answer :
+                      <span>
+                        {resultContent ? resultContent.skippedCount : ""}
                       </span>
                     </li>
                   </ul>

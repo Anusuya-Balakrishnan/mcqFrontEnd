@@ -41,6 +41,7 @@ export function QuestionPage() {
   const [level, setLevel] = useState(questions["level"]);
   const [resultObject, setResultObject] = useState({});
   const [isSelected, setSelected] = useState(0);
+  const [timer, setTimer] = useState(10);
 
   useEffect(() => {
     setActualQuestions(questions.key || {});
@@ -55,13 +56,17 @@ export function QuestionPage() {
 
   function changeQuestionNumber() {
     // Move to the next question
-    if (count < id_list.length - 1 && isSelected === 0) {
+
+    if (count < id_list.length - 1 && isSelected === 0 && timer !== 0) {
       toast.info("Please select any one option");
     } else if (count < id_list.length - 1) {
       setSelected(0);
       setCount((prevIndex) => prevIndex + 1);
+      setCurrentAnswer(null);
+      setTimer(10);
     } else {
       // Add the result value for the current question
+
       setResultObject((resultObject) => ({
         resultList: resultList,
         topicId: topicIdData,
@@ -71,6 +76,47 @@ export function QuestionPage() {
     }
   }
 
+  useEffect(() => {
+    if (count == id_list.length - 2 && timer == 0) {
+      setResultObject((resultObject) => ({
+        resultList: resultList,
+        topicId: topicIdData,
+        languageId: languageIdData,
+        level: level,
+      }));
+    }
+  }, [count]);
+  // Function to decrement the timer by 1 second
+  const decrementTimer = () => {
+    setTimer((prevTimer) => prevTimer - 1);
+  };
+
+  // Effect to decrement the timer every second
+  useEffect(() => {
+    const timerInterval = setInterval(decrementTimer, 1000);
+
+    // Clear the interval when the component unmounts or the timer reaches 0
+    return () => clearInterval(timerInterval);
+  }, []);
+
+  // Effect to handle actions when the timer reaches 0
+  useEffect(() => {
+    if (timer === 0) {
+      // Do something when the timer reaches 0 (e.g., move to the next question)
+      // Add the result value for the current question
+      if (!currentAnswer) {
+        setCurrentAnswer(null);
+        setResultList((prevResultList) => ({
+          ...prevResultList,
+          [id_list[count]]: {
+            selectedAnswer: "time out",
+            isCorrect: false,
+          },
+        }));
+      }
+      changeQuestionNumber();
+    }
+  }, [timer, currentAnswer]);
   useEffect(() => {
     if (id_list.length > 0 && actualQuestions[id_list[count]]) {
       setcurrentQuestion(actualQuestions[id_list[count]]);
@@ -168,12 +214,12 @@ export function QuestionPage() {
                 <div>
                   {topicName}: {count + 1} of {id_list.length} Questions
                 </div>
-                {/* <div className="Question_time">
+                <div className="Question_time">
                   <span>
                     <RiTimerLine />
                   </span>
-                  {seconds} sec
-                </div> */}
+                  {timer} sec
+                </div>
               </div>
               <div className="question-page__body">
                 <div className="question-page-content">

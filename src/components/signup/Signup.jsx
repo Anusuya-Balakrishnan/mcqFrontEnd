@@ -7,8 +7,10 @@ import { Home } from "../home/Home";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import signup from "./signup.css";
+import { useNavigate } from "react-router-dom";
 
 export function Signup() {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [oceanRegisterNo, setOceanRegisterNo] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -54,9 +56,15 @@ export function Signup() {
         setEmail("");
         setConfirmPassword("");
         setPassword("");
-
-        localStorage.setItem("token", response?.data?.token);
-        localStorage.setItem("username", response?.data?.user?.studentName);
+        if (response?.data?.message === true) {
+          localStorage.setItem("token", response?.data?.token);
+          localStorage.setItem("username", response?.data?.user?.studentName);
+          toast.success("successfully registered");
+          navigate("/home");
+        } else {
+          setSuccess(false);
+          toast.info("Ocean register number is already in use");
+        }
       } catch (error) {
         console.log("error", error);
       }
@@ -65,7 +73,7 @@ export function Signup() {
   const checkData = () => {
     if (oceanRegisterNo) {
       if (!/OCNST\d{5}/.test(oceanRegisterNo)) {
-        toast.info("enter valid ocean register number");
+        toast.info("Ocean register number format is invalid");
         return false;
       }
     } else {
@@ -74,7 +82,7 @@ export function Signup() {
     }
     if (userName) {
       if (!/^[a-zA-Z0-9_]{3,20}$/.test(userName)) {
-        toast.info("enter valid User Name");
+        toast.info("User Name format is invalid");
         return false;
       }
     } else {
@@ -83,7 +91,7 @@ export function Signup() {
     }
     if (mobileNumber) {
       if (!/^\d{10}$/.test(mobileNumber)) {
-        toast.info("Enter valid mobile Number");
+        toast.info("Valid mobile Number format is invalid");
         return false;
       }
     } else {
@@ -92,7 +100,7 @@ export function Signup() {
     }
     if (email) {
       if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-        toast.info("Enter valid email");
+        toast.info("Email format is invalid");
         return false;
       }
     } else {
@@ -113,17 +121,14 @@ export function Signup() {
         "Enter same characters in password and confirm password field"
       );
       return false;
-    } else {
-      toast.success("successfully registered");
     }
+
     return true;
   };
 
   return (
     <>
-      {success || Boolean(token) ? (
-        <Home />
-      ) : (
+      {!(success || Boolean(token)) ? (
         <section id="CreateAccount">
           <div className="sign-up-block">
             <div className="sign-up-heading">
@@ -220,6 +225,10 @@ export function Signup() {
             </form>
           </div>
         </section>
+      ) : (
+        <>
+          <Home />
+        </>
       )}
     </>
   );

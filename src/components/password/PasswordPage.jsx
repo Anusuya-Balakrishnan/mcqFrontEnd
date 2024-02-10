@@ -15,10 +15,10 @@ function PasswordPage() {
   const errorRef = useRef(null);
   const [token, setToken] = useState("");
   const [success, setSuccess] = useState(false);
-  const [erMessage, setError] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -36,37 +36,40 @@ function PasswordPage() {
 
   const result = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/mcq/userLogin/",
-        { oceanRegisterNo: registerId, password: password }
-      );
-      setPassword("");
-      setError(false);
-      if (response?.data?.message) {
-        localStorage.setItem("token", response?.data?.token);
-        localStorage.setItem("username", response?.data?.studentName);
-        navigate("/home");
-        setSuccess(true);
-        setToken(response?.data?.token);
-      }
+    if (password) {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/mcq/userLogin/",
+          { oceanRegisterNo: registerId, password: password }
+        );
+        setPassword("");
+        setError(false);
+        setErrorMessage("");
+        if (response?.data?.message) {
+          localStorage.setItem("token", response?.data?.token);
+          localStorage.setItem("username", response?.data?.studentName);
+          navigate("/home");
+          setSuccess(true);
+          setToken(response?.data?.token);
+        }
 
-      // setToken(response?.data?.token);
-      // setError(false);
-    } catch (error) {
-      setPassword("");
+        // setToken(response?.data?.token);
+        // setError(false);
+      } catch (error) {
+        setPassword("");
+        setError(true);
+        setErrorMessage("Invalid Password");
+      }
+    } else {
       setError(true);
+      setErrorMessage("Enter Password");
     }
   };
 
   return (
     <div>
       <>
-        {localStorage.getItem("token") != null ? (
-          <section>
-            <Home />
-          </section>
-        ) : (
+        {localStorage.getItem("token") === null && (
           <section>
             <div className="home-page">
               <div className="home-page__logo">
@@ -89,7 +92,6 @@ function PasswordPage() {
                         name="password"
                         value={password}
                         autoComplete="OFF"
-                        required
                       />
                       <div
                         className="showPassword"
@@ -103,10 +105,10 @@ function PasswordPage() {
                       className="errorMessage"
                       style={{
                         color: "red",
-                        display: erMessage ? "block" : "none",
+                        display: error ? "block" : "none",
                       }}
                     >
-                      InCorrect Password
+                      {errorMessage}
                     </div>
                   </div>
 
